@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ôn tập cuối học kì I — Tin học 8</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#13235e">
+<style>
+:root{--bg:#0b1640;--bg2:#13235e;--card:#ffffff;--ink:#14204a;--mute:#5b6690;--acc:#ffc93c;--ok:#1fa463;--bad:#e5484d;--pri:#2f6bff;--line:#d9def0}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(1200px 600px at 50% -10%,#2a4bb8 0,var(--bg) 60%);color:#fff;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header .grow{min-width:220px}
+header h1{font-size:clamp(20px,3.2vw,34px);margin:0;letter-spacing:.5px}
+header .sub{color:#c9d3ff;font-size:14px}
+.pill{background:rgba(255,255,255,.12);border-radius:999px;padding:6px 12px;font-size:14px}
+.identity{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.identity .pill{font-size:12px;padding:4px 10px}
+.ai{margin-top:10px}.aib{background:none;border:1px solid #c8d2f0;border-radius:999px;padding:5px 12px;font-size:14px;color:#2f4a9a;cursor:pointer;font-family:inherit}.aib:disabled{opacity:.6}.ait{font-size:15px;color:#33406b;margin-top:6px;line-height:1.45}
+.tacquyen{font-size:11px;color:#9fb0e6;margin-top:6px}
+.grow{flex:1}
+.card{background:var(--card);color:var(--ink);border-radius:18px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.25);margin-top:16px}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-size:17px;font-weight:600;cursor:pointer;background:var(--pri);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:#eef1fb;color:var(--ink)}
+.btn.acc{background:var(--acc);color:#1b1b1b}
+.btn.ok{background:var(--ok)}
+.btn.sm{padding:8px 12px;font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+input[type=text],textarea{font-size:18px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;width:100%;font-family:inherit}
+textarea{min-height:150px}
+label{font-weight:600}
+.vong{border:2px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;background:#f7f9ff}
+.vong b{display:block;font-size:18px;margin-bottom:4px}
+.vong.on{border-color:var(--pri);background:#e9f0ff}
+.q{font-size:clamp(19px,2.4vw,26px);font-weight:600;line-height:1.4;margin:6px 0 14px}
+.tag{display:inline-block;max-width:100%;white-space:normal;background:#eef1fb;color:var(--mute);border-radius:8px;padding:3px 8px;font-size:13px;margin-right:6px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.opt{border:2px solid var(--line);background:#fff;border-radius:14px;padding:14px 16px;font-size:clamp(17px,2vw,21px);text-align:left;cursor:pointer;color:var(--ink);font-family:inherit}
+.opt:hover{border-color:var(--pri)}
+.opt .k{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#eef1fb;margin-right:10px;font-weight:700}
+.opt.ok{background:#e3f7ec;border-color:var(--ok)}
+.opt.bad{background:#fde8e8;border-color:var(--bad)}
+.timer{height:10px;background:#eef1fb;border-radius:99px;overflow:hidden;margin:8px 0 14px}
+.timer i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--acc),var(--bad));width:100%;transition:width .2s linear}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:17px}
+.fb.ok{background:#e3f7ec;color:#0d5b34}
+.fb.bad{background:#fde8e8;color:#8a1c1f}
+.src{color:var(--mute);font-size:13px;margin-top:6px}
+.tf{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-bottom:1px dashed var(--line);padding:10px 0;font-size:clamp(16px,1.9vw,20px)}
+.tf .bt{display:flex;gap:6px}
+.tf button{min-width:58px}
+.sel{outline:3px solid var(--pri)}
+.m-col{display:flex;flex-direction:column;gap:10px}
+.chip{border:2px solid var(--line);border-radius:12px;padding:12px;background:#fff;cursor:pointer;font-size:clamp(15px,1.8vw,19px);color:var(--ink);text-align:left;font-family:inherit}
+.chip.pick{border-color:var(--pri);background:#e9f0ff}
+.chip.done{border-color:var(--ok);background:#e3f7ec;cursor:default}
+.chip.wrong{animation:sh .35s;border-color:var(--bad)}
+@keyframes sh{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.cat{border:2px dashed #a9b4dc;border-radius:14px;padding:10px;min-height:120px;background:#f7f9ff;cursor:pointer}
+.cat h4{margin:0 0 8px;font-size:17px}
+.cat .chip{margin:4px 0;width:100%}
+.pool{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.sortl{display:flex;flex-direction:column;gap:8px}
+.sortl .it{display:flex;align-items:center;gap:8px;border:2px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff;font-size:clamp(16px,1.9vw,20px)}
+.sortl .it span{flex:1}
+.sortl .it.ok{border-color:var(--ok);background:#e3f7ec}
+.sortl .it.bad{border-color:var(--bad);background:#fde8e8}
+.score{font-size:64px;font-weight:800;color:var(--pri);text-align:center}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#eef1fb}
+.teams{display:flex;gap:8px;flex-wrap:wrap}
+.team{background:rgba(255,255,255,.14);border-radius:12px;padding:6px 12px;font-weight:700}
+.team.now{background:var(--acc);color:#1b1b1b}
+.draft{font-size:12px;color:#c9d3ff;margin-top:18px;text-align:center}
+.hide{display:none!important}
+.prog{font-size:14px;color:var(--mute)}
+.big-emoji{font-size:54px;text-align:center}
+@media (max-width:600px){.wrap{padding:10px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="big-emoji" style="font-size:40px">🔔</div>
+    <div class="grow">
+      <h1 id="hTitle"></h1>
+      <div class="sub" id="hSub"></div>
+      <div class="identity"><span class="pill">TRƯỜNG THCS CHÁNH HƯNG</span><span class="pill">Tổ Tin học</span><span class="pill">Giáo viên: Ngô Thị Phương Mai</span></div>
+      <div class="tacquyen">© 2026 Ngô Thị Phương Mai · Bản quyền nội dung thuộc tác giả</div>
+    </div>
+    <button class="btn sm ghost" id="btnLog" title="Lịch sử các lượt chơi trên máy này">📒 Lịch sử</button>
+  </header>
+  <div id="teamBar" class="teams hide" style="margin-top:12px"></div>
+  <main id="app"></main>
+  <div class="draft">TRƯỜNG THCS CHÁNH HƯNG · Tổ Tin học · © 2026 Ngô Thị Phương Mai</div>
+</div>
+<script>
+const BAI = {"id": "ON-TAP-CK1-TIN8", "ten": "Ôn tập cuối học kì I — Tin học 8", "phamvi": "Bài 1 → Bài 7 · Chủ đề 1 Máy tính và cộng đồng · Chủ đề 2 Tổ chức lưu trữ, tìm kiếm và trao đổi thông tin · Chủ đề 3 Đạo đức, pháp luật và văn hoá trong môi trường số · Chủ đề 4 Ứng dụng tin học (bảng tính, biểu đồ)", "so": {"mc": 10, "tf": 4, "th": 4, "tl": 3}, "giay_mc": 25, "giay_tf": 60, "mc": [{"bai": "Bài 1", "q": "Trong lĩnh vực y tế, thiết bị nào có thể theo dõi sức khoẻ thường xuyên và thông báo đến người thân, cơ sở y tế?", "opts": ["Đồng hồ thông minh", "Bàn tính", "Máy in", "Máy chiếu"]}, {"bai": "Bài 1", "q": "Máy tính thế hệ thứ nhất (1945 – 1955) dùng thành phần điện tử chính nào?", "opts": ["Đèn điện tử chân không", "Bóng bán dẫn", "Mạch tích hợp", "Bộ vi xử lí"]}, {"bai": "Bài 1", "q": "Năm 1642, ai đã sáng chế ra chiếc máy tính cơ học Pascaline?", "opts": ["Blaise Pascal", "Charles Babbage", "Gottfried Leibniz", "John Von Neumann"]}, {"bai": "Bài 1", "q": "Máy tính thế hệ thứ ba (1965 – 1974) được chế tạo dựa trên công nghệ nào?", "opts": ["Mạch tích hợp (IC)", "Đèn điện tử chân không", "Bóng bán dẫn rời", "Trí tuệ nhân tạo"]}, {"bai": "Bài 1", "q": "Claude Shannon chỉ ra có thể dùng thiết bị nào để thực hiện các thao tác tính toán trên dãy bit?", "opts": ["Các rơ le", "Các bánh răng", "Đèn điện tử chân không", "Bóng bán dẫn"]}, {"bai": "Bài 1", "q": "Máy tính thế hệ thứ năm (1990 – nay) có một số khả năng như cảm nhận, suy luận, tương tác. Những khả năng đó được gọi là gì?", "opts": ["Trí tuệ nhân tạo", "Mạng máy tính", "Bộ nhớ ngoài", "Kiến trúc Von Neumann"]}, {"bai": "Bài 1", "q": "Năm 1945, ai đã trình bày nguyên lí hoạt động của máy tính với khái niệm «chương trình được lưu trữ»?", "opts": ["John Von Neumann", "Charles Babbage", "Claude Shannon", "Blaise Pascal"]}, {"bai": "Bài 1", "q": "Năm thế hệ máy tính điện tử được đánh dấu bởi điều gì?", "opts": ["Những tiến bộ công nghệ nhằm thu nhỏ, tích hợp các linh kiện điện tử", "Sự thay đổi màu sắc của máy", "Số lượng người sử dụng", "Giá bán của máy tính"]}, {"bai": "Bài 2", "q": "Nội dung những trang web đã lâu không được cập nhật thường có độ tin cậy như thế nào?", "opts": ["Thấp", "Rất cao", "Tuyệt đối", "Cao hơn trang mới"]}, {"bai": "Bài 2", "q": "Khoa chụp lại bức ảnh và gửi cho An qua thư điện tử. Sau khi gửi, Khoa có bị mất bức ảnh đó không?", "opts": ["Không, Khoa vẫn còn ảnh", "Có, ảnh chuyển hẳn sang máy của An", "Chỉ mất nếu An mở ảnh", "Mất sau 24 giờ"]}, {"bai": "Bài 2", "q": "Nếu không biết khai thác nguồn tin đáng tin cậy mà tin vào quảng cáo quá mức, em có thể gặp điều gì?", "opts": ["Tiêu tiền một cách lãng phí", "Tiết kiệm được tiền", "Không có ảnh hưởng gì", "Luôn mua được đồ tốt"]}, {"bai": "Bài 2", "q": "Thông tin không đáng tin cậy có giá trị sử dụng như thế nào?", "opts": ["Thấp, thậm chí không sử dụng được", "Rất cao", "Bằng thông tin đáng tin cậy", "Cao hơn thông tin chính thống"]}, {"bai": "Bài 2", "q": "Những kết luận không có chứng cứ có độ tin cậy như thế nào?", "opts": ["Rất thấp, giống như ý kiến cá nhân", "Rất cao", "Chắc chắn đúng", "Bằng sự kiện"]}, {"bai": "Bài 2", "q": "Vì sao em khó biết thông tin số đã lan rộng đến mức nào?", "opts": ["Vì thông tin có thể lan truyền tự động do nhiều thiết bị được đồng bộ với nhau", "Vì thông tin số không lưu được", "Vì chỉ một người xem được", "Vì thông tin số tự xoá"]}, {"bai": "Bài 2", "q": "So với sự kiện, độ tin cậy của ý kiến như thế nào?", "opts": ["Thấp hơn vì mang nhiều cảm xúc và định kiến cá nhân", "Cao hơn", "Bằng nhau", "Luôn chính xác"]}, {"bai": "Bài 2", "q": "Đặc điểm nào đúng với thông tin số?", "opts": ["Dễ dàng được nhân bản và lan truyền nhưng khó bị xoá bỏ hoàn toàn", "Rất khó sao chép", "Dễ dàng xoá bỏ hoàn toàn", "Chỉ một người được xem"]}, {"bai": "Bài 2", "q": "Thông tin đáng tin cậy giúp em điều gì?", "opts": ["Đưa ra kết luận đúng, quyết định hành động đúng, giải quyết được vấn đề", "Lan truyền thật nhanh", "Không cần kiểm tra", "Chỉ để giải trí"]}, {"bai": "Bài 2", "q": "Vì sao thông tin từ blog thường có độ tin cậy thấp?", "opts": ["Vì ai cũng có thể viết blog", "Vì blog luôn có chứng cứ", "Vì blog do cơ quan nhà nước quản lí", "Vì blog không có chữ"]}, {"bai": "Bài 2", "q": "So với bức ảnh trên giấy, bức ảnh số có điểm gì khác?", "opts": ["Được tạo ra không tốn vật liệu", "Không thể sao chép", "Chỉ xem được trên giấy", "Không chỉnh sửa được"]}, {"bai": "Bài 2", "q": "Chọn phương án ghép đúng: Thông tin số được nhiều tổ chức và cá nhân lưu trữ với dung lượng rất lớn, …", "opts": ["được bảo hộ quyền tác giả và có độ tin cậy khác nhau", "được truy cập tự do và có độ tin cậy khác nhau", "được bảo hộ quyền tác giả và không đáng tin cậy", "được bảo hộ quyền tác giả và rất đáng tin cậy"]}, {"bai": "Bài 3", "q": "Với nội dung quy hoạch cơ cấu nguồn điện, thông tin từ nguồn nào đáng tin cậy hơn?", "opts": ["Cơ quan chính phủ", "Diễn đàn trên mạng", "Trang web của doanh nghiệp", "Bình luận trên mạng xã hội"]}, {"bai": "Bài 3", "q": "Ở Bước 1 của Nhiệm vụ 2, em tìm kiếm thông tin bằng cách nào?", "opts": ["Sử dụng máy tìm kiếm với các từ khoá", "Hỏi ngẫu nhiên người lạ trên mạng", "Chép lại bài của bạn", "Đoán nội dung"]}, {"bai": "Bài 3", "q": "Ở Bước 2 của Nhiệm vụ 1, nội dung bài trình chiếu nên được thể hiện như thế nào để thuận lợi cho việc tìm tư liệu?", "opts": ["Sắp xếp theo trình tự lôgic, thể hiện dưới dạng những câu hỏi", "Viết thành một đoạn văn dài", "Chỉ gồm hình ảnh", "Liệt kê ngẫu nhiên các ý"]}, {"bai": "Bài 3", "q": "Nhiệm vụ 2 của bài thực hành là gì?", "opts": ["Tìm kiếm và đánh giá thông tin", "Hình thành ý tưởng bài trình chiếu", "Xử lí và trao đổi thông tin", "Thiết kế nhà máy điện"]}, {"bai": "Bài 3", "q": "Trong bài thực hành, các bạn Minh, Khoa, An tạo bài trình chiếu với chủ đề gì?", "opts": ["Năng lượng tái tạo", "Lược sử máy tính", "An toàn giao thông", "Bảo vệ rừng"]}, {"bai": "Bài 3", "q": "Để tạo và sửa hình ảnh minh hoạ phù hợp với nội dung, em sử dụng phần mềm gì?", "opts": ["Phần mềm xử lí hình ảnh", "Phần mềm diệt virus", "Phần mềm nghe nhạc", "Phần mềm soạn thư"]}, {"bai": "Bài 4", "q": "Ở tình huống khởi động, An không hỏi ý kiến Khoa mà chỉnh sửa ảnh, không ghi chú tác giả là Khoa. Việc này:", "opts": ["Không vi phạm pháp luật nhưng vi phạm đạo đức", "Hoàn toàn đúng", "Vi phạm pháp luật nhưng không vi phạm đạo đức", "Thể hiện sự trung thực"]}, {"bai": "Bài 4", "q": "Em nên sử dụng thông tin nào khi tạo sản phẩm số?", "opts": ["Thông tin do mình tự tạo (tự quay video, chụp ảnh, viết nội dung…)", "Thông tin có bản quyền chưa xin phép", "Ảnh của người khác lấy trên mạng", "Video tải từ trang không có bản quyền"]}, {"bai": "Bài 4", "q": "Khi tạo sản phẩm số, em cần bảo đảm điều gì?", "opts": ["Thể hiện được đạo đức, tính văn hoá và không vi phạm pháp luật", "Càng nhiều người xem càng tốt, bất kể nội dung", "Dùng hình ảnh giật gân để thu hút", "Sao chép nhanh từ người khác"]}, {"bai": "Bài 4", "q": "Hành động nào sau đây KHÔNG vi phạm đạo đức và pháp luật?", "opts": ["Tặng đĩa nhạc có bản quyền em đã mua cho người khác", "Đăng tải thông tin sai sự thật lên mạng", "Cố ý nghe, ghi âm trái phép các cuộc nói chuyện", "Tải bài trình chiếu của người khác từ Internet và sử dụng như là của mình tạo ra"]}, {"bai": "Bài 4", "q": "Tải về máy tính cá nhân các tệp bài hát, video có bản quyền để sử dụng mà chưa được phép là:", "opts": ["Biểu hiện vi phạm", "Hành vi đúng nếu chỉ nghe một mình", "Hành vi được khuyến khích", "Không liên quan đến bản quyền"]}, {"bai": "Bài 4", "q": "Em chỉ nên sử dụng những sản phẩm số khi nào?", "opts": ["Khi có sự cho phép của tác giả hoặc có bản quyền sử dụng", "Khi tìm thấy trên Internet", "Khi bạn bè cũng dùng", "Khi không ai biết"]}, {"bai": "Bài 4", "q": "Nhờ đâu mà việc tạo ra các sản phẩm số rất dễ dàng và nhanh chóng?", "opts": ["Công nghệ kĩ thuật số và các thiết bị điện tử thông minh", "Bút và giấy", "Sách giáo khoa", "Bảng đen"]}, {"bai": "Bài 4", "q": "Bảo đảm tính văn hoá, đạo đức và tuân thủ pháp luật khi tạo sản phẩm số giúp gì?", "opts": ["Tránh lan truyền thông tin sai trái, góp phần tạo xã hội số lành mạnh và hợp pháp", "Giúp sản phẩm nổi tiếng nhanh", "Giúp máy tính chạy nhanh hơn", "Không có tác dụng gì"]}, {"bai": "Bài 4", "q": "«Luôn trung thực trong quá trình tạo ra sản phẩm số» nghĩa là gì?", "opts": ["Không dùng thông tin giả, không đáng tin cậy; không sao chép, chỉnh sửa thông tin của người khác rồi coi là của mình", "Chỉ dùng thông tin của người nổi tiếng", "Luôn ghi tên mình lên mọi bức ảnh tìm được", "Đăng thật nhiều bài mỗi ngày"]}, {"bai": "Bài 4", "q": "Hành vi nào sau đây là biểu hiện vi phạm khi sử dụng công nghệ kĩ thuật số?", "opts": ["Quay phim trong rạp chiếu phim", "Tự quay video bài hát của mình", "Chụp ảnh phong cảnh ở nơi được phép", "Đọc sách điện tử đã mua"]}, {"bai": "Bài 5", "q": "Khi cần tính toán trên bảng dữ liệu được tạo trong phần mềm soạn thảo văn bản hoặc trình chiếu, em nên làm gì?", "opts": ["Sao chép bảng dữ liệu sang phần mềm bảng tính", "Tính nhẩm từng ô", "Gõ lại toàn bộ bằng tay vào giấy", "Chụp ảnh màn hình"]}, {"bai": "Bài 5", "q": "Địa chỉ tương đối có đặc điểm gì khi sao chép công thức?", "opts": ["Tự động thay đổi nhưng giữ nguyên vị trí tương đối giữa ô chứa công thức và ô có địa chỉ trong công thức", "Không bao giờ thay đổi", "Luôn bị xoá", "Chuyển thành địa chỉ tuyệt đối"]}, {"bai": "Bài 5", "q": "Phần mềm có đơn giá bằng 0 (như Từ điển, Sổ sức khoẻ điện tử) nghĩa là gì?", "opts": ["Phần mềm miễn phí", "Phần mềm bị lỗi", "Phần mềm chưa có ai mua", "Phần mềm đã ngừng bán"]}, {"bai": "Bài 5", "q": "Một trong những ưu điểm nổi bật của chương trình bảng tính là gì?", "opts": ["Tính toán tự động", "Vẽ tranh đẹp", "Phát nhạc", "Gửi thư điện tử"]}, {"bai": "Bài 5", "q": "Trong phần mềm bảng tính, sau khi chọn ô ở góc trên cùng bên trái của vùng muốn dán, em chọn lệnh nào?", "opts": ["Paste", "Copy", "Cut", "Sort"]}, {"bai": "Bài 5", "q": "Công thức tại ô F5 là =E5*$F$2. Sao chép công thức này đến ô F6, kết quả sao chép là:", "opts": ["=E6*$F$2", "=E6*F3", "=$E$6*F3", "=$E$6*$F$2"]}, {"bai": "Bài 5", "q": "Địa chỉ nào sau đây là địa chỉ tuyệt đối?", "opts": ["$F$2", "F2", "F$2", "$F2"]}, {"bai": "Bài 5", "q": "Địa chỉ tuyệt đối là gì?", "opts": ["Địa chỉ ô trong công thức không thay đổi khi sao chép công thức", "Địa chỉ luôn thay đổi khi sao chép", "Địa chỉ của trang web", "Địa chỉ của ô đầu tiên trong trang tính"]}, {"bai": "Bài 5", "q": "Địa chỉ tuyệt đối có kí hiệu gì?", "opts": ["Kí hiệu $ trước tên cột và trước tên hàng", "Kí hiệu # trước tên cột", "Kí hiệu % sau tên hàng", "Kí hiệu & giữa tên cột và tên hàng"]}, {"bai": "Bài 5", "q": "Khi nhập địa chỉ ô cho một công thức bằng thao tác nháy chuột vào ô, chương trình bảng tính mặc định lấy địa chỉ ô đó là:", "opts": ["Địa chỉ tương đối", "Địa chỉ tuyệt đối", "Địa chỉ hỗn hợp", "Địa chỉ trang web"]}, {"bai": "Bài 6", "q": "Để sắp xếp bảng kết quả khảo sát lớp 8A, em chọn vùng dữ liệu A2:E12. Hàng 2 trong vùng này là gì?", "opts": ["Hàng tiêu đề của bảng", "Hàng dữ liệu cần sắp xếp", "Hàng trống", "Hàng tổng cộng"]}, {"bai": "Bài 6", "q": "Khi lọc dữ liệu, các dữ liệu không đúng với điều kiện lọc sẽ như thế nào?", "opts": ["Bị ẩn đi", "Bị xoá vĩnh viễn", "Được tô màu đỏ", "Chuyển sang trang tính khác"]}, {"bai": "Bài 6", "q": "Để lọc danh sách học sinh của Tổ 1 muốn tìm hiểu nội dung Đồ hoạ máy tính, em làm thế nào?", "opts": ["Trong cột Nội dung chọn Đồ hoạ máy tính, trong cột Tổ chọn 1", "Chỉ lọc cột Tên", "Sắp xếp cột Tổ giảm dần", "Lọc cột TT"]}, {"bai": "Bài 6", "q": "Lưu ý nào đúng khi sắp xếp theo thứ tự bảng chữ cái dùng bảng mã Unicode?", "opts": ["Kết quả không hoàn toàn đúng với thứ tự trong tiếng Việt", "Kết quả luôn đúng hoàn toàn với tiếng Việt", "Không sắp xếp được chữ có dấu", "Chỉ sắp xếp được chữ số"]}, {"bai": "Bài 6", "q": "Khi sắp xếp theo hai tiêu chí «Sort by: Tên» và «Then by: Họ đệm», điều gì xảy ra?", "opts": ["Sắp xếp theo Tên; nếu cùng Tên thì sắp xếp theo Họ đệm", "Chỉ sắp xếp theo Họ đệm", "Sắp xếp theo Họ đệm rồi bỏ qua Tên", "Lọc ra các bạn cùng tên"]}, {"bai": "Bài 6", "q": "Để bỏ lọc dữ liệu, em làm thế nào?", "opts": ["Chọn Select All trong danh sách giá trị của cột", "Xoá bảng tính", "Chọn Add Level", "Nhấn phím F4"]}, {"bai": "Bài 6", "q": "Sau khi sắp xếp dữ liệu, cột TT không còn đúng thứ tự. Em nên làm gì?", "opts": ["Nhập lại giá trị của cột TT cho đúng thứ tự", "Xoá cột TT", "Sắp xếp lại theo cột Tổ", "Không cần làm gì"]}, {"bai": "Bài 6", "q": "Trong bảng Hình 6.9, cột «Không sử dụng» có giá trị lớn nhất là 9. Khi sắp xếp giảm dần theo cột này, lớp nào đứng đầu?", "opts": ["8A8", "8A1", "8A7", "8A10"]}, {"bai": "Bài 6", "q": "Thứ tự «A to Z» trong hộp thoại Sort nghĩa là gì?", "opts": ["Sắp xếp theo thứ tự bảng chữ cái tăng dần từ A đến Z", "Sắp xếp giảm dần từ Z đến A", "Lọc các tên bắt đầu bằng A", "Xoá dữ liệu từ A đến Z"]}, {"bai": "Bài 6", "q": "Chức năng lọc dữ liệu của phần mềm bảng tính được sử dụng để làm gì?", "opts": ["Chọn và chỉ hiển thị các dòng thoả mãn các điều kiện nào đó", "Xoá vĩnh viễn các dòng dữ liệu", "Sắp xếp dữ liệu theo bảng chữ cái", "Tính tổng các cột"]}, {"bai": "Bài 7", "q": "Để bổ sung thông tin cho biểu đồ (tiêu đề, nhãn dữ liệu…), em chọn nút lệnh nào ở góc trên bên phải biểu đồ?", "opts": ["Chart Elements", "Sort", "Filter", "Add Level"]}, {"bai": "Bài 7", "q": "Loại biểu đồ nào thường được dùng để quan sát xu hướng tăng giảm của dữ liệu theo thời gian?", "opts": ["Biểu đồ đoạn thẳng", "Biểu đồ hình quạt tròn", "Biểu đồ cột", "Bảng dữ liệu"]}, {"bai": "Bài 7", "q": "Khi tạo biểu đồ, em cần chú ý điều gì?", "opts": ["Sử dụng loại biểu đồ phù hợp với mục đích biểu diễn và thể hiện dữ liệu", "Luôn dùng biểu đồ hình quạt tròn", "Chọn biểu đồ có nhiều màu nhất", "Không cần chọn vùng dữ liệu"]}, {"bai": "Bài 7", "q": "Trong nhóm biểu đồ 2-D Column, kiểu biểu đồ được chọn để tạo biểu đồ cột như Hình 7.2 là:", "opts": ["Clustered Column", "Pie", "Doughnut", "Line"]}, {"bai": "Bài 7", "q": "Loại biểu đồ nào thường được sử dụng để so sánh dữ liệu?", "opts": ["Biểu đồ cột", "Biểu đồ đoạn thẳng", "Biểu đồ hình quạt tròn", "Sơ đồ tư duy"]}, {"bai": "Bài 7", "q": "Biểu đồ đoạn thẳng Hình 7.3 cho thấy số ứng dụng được tải về từ chợ ứng dụng từ năm 2017 đến 2020 như thế nào?", "opts": ["Có xu hướng tăng dần", "Có xu hướng giảm dần", "Không đổi", "Giảm rồi tăng"]}, {"bai": "Bài 7", "q": "Để so sánh tỉ lệ phần trăm số học sinh của mỗi nội dung Tin học trên tổng số học sinh khảo sát, em dùng biểu đồ nào?", "opts": ["Biểu đồ hình quạt tròn", "Biểu đồ đoạn thẳng", "Biểu đồ cột", "Không cần biểu đồ"]}, {"bai": "Bài 7", "q": "Lệnh tạo biểu đồ nằm ở thẻ nào, nhóm lệnh nào?", "opts": ["Thẻ Insert, nhóm Charts", "Thẻ Data, nhóm Sort & Filter", "Thẻ Home, nhóm Clipboard", "Thẻ View, nhóm Window"]}, {"bai": "Bài 7", "q": "Để tạo biểu đồ hình quạt tròn, trong nhóm Charts em chọn lệnh nào?", "opts": ["Insert Pie or Doughnut Chart", "Insert Column or Bar Chart", "Recommended Charts", "Maps"]}], "tf": [{"bai": "Bài 1", "q": "Bài 1 – Lược sử công cụ tính toán: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Máy tính ASCC (Harvard Mark I) do Howard Aiken chế tạo năm 1943 là loại máy tính nào? → Máy tính cơ học", false, "Đúng là: Máy tính điện – cơ đa năng"], ["Bộ vi xử lí là linh kiện máy tính dựa trên công nghệ nào? → Linh kiện bán dẫn đơn giản", false, "Đúng là: Mạch tích hợp cỡ lớn, gồm hàng chục nghìn đến hàng triệu linh kiện bán dẫn"], ["Một trong những công cụ tính toán sớm nhất của con người là gì? → Bàn tính", true], ["Chiếc máy tính thế hệ thứ hai được đưa vào nước ta năm 1968 có tên là gì? → Minsk-22", true]]}, {"bai": "Bài 2", "q": "Bài 2 – Thông tin trong môi trường số: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Vì sao thời điểm công bố thông tin lại quan trọng? → Vì thông tin cũ luôn đúng hơn", false, "Đúng là: Vì nó quyết định thông tin còn ý nghĩa hay đã lỗi thời"], ["Phát biểu «Tôi nghĩ đây là bộ phim hoạt hình hay nhất mọi thời đại» là gì? → Ý kiến (quan điểm cá nhân)", true], ["Thông tin số có thể được truy cập từ xa khi nào? → Chỉ khi in ra giấy", false, "Đúng là: Khi người quản lí thông tin đó cho phép"], ["Thông tin được mã hoá thành dãy bit, lưu trữ và truyền trong môi trường kĩ thuật số được gọi ngắn gọn là gì? → Thông tin số", true]]}, {"bai": "Bài 3", "q": "Bài 3 – Thực hành: khai thác thông tin số: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Theo ví dụ ở Bước 3, bài trình chiếu cần có ít nhất bao nhiêu hình ảnh minh hoạ? → 2 hình ảnh", true], ["Vì sao cần ghi chép kết quả tìm kiếm (như Bảng 3.1)? → Để thuận tiện cho việc đánh giá và tham khảo", true], ["Nhiệm vụ 1 của bài thực hành gồm những yêu cầu nào? → Biên tập và chia sẻ bài trình chiếu", false, "Đúng là: Xây dựng ý tưởng và cấu trúc bài trình chiếu"], ["Để tìm hiểu cách sử dụng một chiếc máy ảnh mới, nguồn thông tin nào cần được tham khảo nhất? → Hướng dẫn của một người giỏi Tin học", false, "Đúng là: Hướng dẫn sử dụng của nhà sản xuất"]]}, {"bai": "Bài 4", "q": "Bài 4 – Đạo đức và văn hoá trong sử dụng công nghệ kĩ thuật số: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Theo SGK, hầu hết thông tin trên Internet là: → Có bản quyền", true], ["Trong tình huống khởi động, An nên làm theo cách nào? → Đăng ảnh và ghi «Thật tuyệt khi được đến thăm nơi này»", false, "Đúng là: Xin phép Khoa, chỉnh sửa ảnh và ghi chú thích người chụp là Lê Khoa"], ["Vì sao em cần tìm hiểu thông tin, trang bị hiểu biết về pháp luật? → Để chơi trò chơi điện tử lâu hơn", false, "Đúng là: Để sử dụng công nghệ kĩ thuật số có trách nhiệm, tránh vi phạm"], ["Sao chép thông tin từ một trang web và coi đó là của mình là hành vi gì? → Vi phạm khi sử dụng công nghệ kĩ thuật số", true]]}, {"bai": "Bài 5", "q": "Bài 5 – Sử dụng bảng tính giải quyết bài toán thực tế: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Chương trình bảng tính sử dụng mấy loại địa chỉ ô? → 1 loại: địa chỉ tương đối", false, "Đúng là: 3 loại: tương đối, tuyệt đối và hỗn hợp"], ["Công thức tại ô C1 là =A1*B1. Sao chép công thức trong ô C1 vào ô E2 thì công thức tại ô E2 là: → =C2*D2", true], ["Để tính Doanh thu của công ti, vì sao ô F2 chứa Tỉ lệ phải dùng địa chỉ tuyệt đối? → Vì giá trị Tỉ lệ luôn cố định (70%) cho mọi phần mềm", true], ["Công thức tại ô E4 là =C4*D4. Sao chép công thức này đến ô E9 thì công thức tại E9 là: → =E9*D9", false, "Đúng là: =C9*D9"]]}, {"bai": "Bài 6", "q": "Bài 6 – Sắp xếp và lọc dữ liệu: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Để mở hộp thoại Sort, em chọn lệnh Sort ở thẻ nào? → Data, nhóm Sort & Filter", true], ["Nhóm bạn lớp 8A thực hiện khảo sát để làm gì? → Chọn lớp trưởng", false, "Đúng là: Thu thập thông tin để quyết định CLB Tin học sẽ được tổ chức như thế nào"], ["Để bật chức năng lọc, em chọn lệnh nào trong thẻ Data, nhóm Sort & Filter? → Sort", false, "Đúng là: Filter"], ["Mỗi phiếu khảo sát được trả lời được lưu trong bảng tính như thế nào? → Là một hàng dữ liệu", true]]}, {"bai": "Bài 7", "q": "Bài 7 – Trình bày dữ liệu bằng biểu đồ: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Theo biểu đồ cột Hình 7.2, nội dung nào ít học sinh quan tâm nhất? → Phần mềm trình chiếu", false, "Đúng là: Soạn thảo văn bản"], ["Để tính tổng số học sinh sử dụng thiết bị số trong mỗi khoảng thời gian (Hình 7.8), em dùng hàm nào? → SUM", true], ["Biểu đồ được sử dụng để làm gì? → Minh hoạ dữ liệu một cách trực quan", true], ["Để tạo biểu đồ từ bảng Hình 7.1, em chọn vùng dữ liệu nào? → C3:C8", false, "Đúng là: B2:C8"]]}], "th": [{"bai": "Bài 1", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Máy tính thế hệ thứ hai (1955 – 1965) dùng thành phần điện tử chính nào?", "Bóng bán dẫn"], ["Ai được coi là cha đẻ của công nghệ máy tính?", "Charles Babbage"], ["Các phép tính đầu tiên được con người thực hiện bằng cách nào?", "Sử dụng 10 ngón tay"], ["Nhà Toán học nào đã cải tiến, thêm phép tính nhân, chia vào máy tính của Pascal?", "Gottfried Leibniz"]]}, {"bai": "Bài 1", "t": "cat", "q": "Máy tính trong dự án của Babbage có những đặc điểm nào? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Máy tính cơ học, thực hiện tự động", 0], ["Có những ứng dụng ngoài tính toán thuần tuý", 0], ["Có thiết kế giống với máy tính ngày nay", 0], ["Chạy bằng mạch tích hợp", 1]]}, {"bai": "Bài 2", "t": "cat", "q": "Thông tin số có thể được chuyển vào những thiết bị nào? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Máy tính", 0], ["Điện thoại thông minh", 0], ["Máy tính bảng", 0], ["Tờ giấy in", 1]]}, {"bai": "Bài 3", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Khi biên tập nội dung, mỗi trang trình chiếu nên như thế nào?", "Không quá 6 mục, mỗi mục không quá 2 dòng"], ["Trang web có địa chỉ dạng «…gov.vn» là trang thông tin của ai?", "Cơ quan chính phủ"], ["Để tìm hiểu về một đội bóng đá ở châu Phi, nguồn thông tin nào đáng tin cậy nhất?", "Nguồn tin từ Liên đoàn bóng đá châu Phi"], ["Trước khi sử dụng thông tin để minh hoạ cho lập luận của mình, em cần làm gì?", "Đánh giá lợi ích của thông tin"]]}, {"bai": "Bài 3", "t": "cat", "q": "Theo ví dụ trong SGK, bài trình chiếu khoảng 10 trang cần có những trang nào? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Trang tiêu đề, trang dàn ý", 0], ["Trang giới thiệu vấn đề, một số trang nội dung", 0], ["Trang kết luận và trang tài liệu tham khảo", 0], ["Trang quảng cáo sản phẩm", 1]]}, {"bai": "Bài 4", "t": "cat", "q": "Những biểu hiện nào là vi phạm đạo đức, pháp luật hay thiếu văn hoá khi sử dụng công nghệ kĩ thuật số? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Chụp ảnh ở nơi không cho phép", 0], ["Ghi âm trái phép các cuộc nói chuyện", 0], ["Sử dụng phần mềm bẻ khoá", 0], ["Gửi lời chúc mừng sinh nhật bạn qua thư điện tử", 1]]}, {"bai": "Bài 5", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Trong thẻ Home, lệnh nào dùng để sao chép các hàng, cột đã chọn của bảng?", "Copy (hoặc Ctrl + C)"], ["Trong bài, Doanh thu của mỗi phần mềm được tính theo công thức nào?", "Doanh thu = Đơn giá × Số lượt mua"], ["Công thức tại ô E4 là =C4*D4. Sao chép công thức này đến ô E5 thì công thức tại E5 là:", "=C5*D5"], ["Công thức đúng tại ô F4 để tính Doanh thu của công ti cho phần mềm Quản lí thời gian là:", "=E4*$F$2"]]}, {"bai": "Bài 5", "t": "cat", "q": "Cách nhập kí hiệu $ cho địa chỉ tuyệt đối là: Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Gõ kí hiệu $ từ bàn phím khi nhập địa chỉ ô", 0], ["Sau khi nhập địa chỉ tương đối, nhấn phím F4 để chuyển thành địa chỉ tuyệt đối", 0], ["Sau khi nhập địa chỉ tương đối, nhấn phím F2", 1], ["Nhấn phím Delete", 1]]}, {"bai": "Bài 6", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Để dễ dàng quan sát tên học sinh, trong bảng tính người ta tách họ tên thành hai phần nào?", "Họ đệm và Tên"], ["Trong hộp thoại Sort, đánh dấu ô «My data has headers» để làm gì?", "Không sắp xếp dòng tiêu đề"], ["Trong hộp thoại Sort, nút lệnh nào dùng để xoá bỏ tiêu chí sắp xếp?", "Delete Level"], ["Trong hộp thoại Sort, nút lệnh nào dùng để thêm tiêu chí sắp xếp?", "Add Level"]]}, {"bai": "Bài 6", "t": "cat", "q": "Chức năng sắp xếp và lọc dữ liệu giúp giải quyết những yêu cầu nào? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Sắp xếp họ tên học sinh theo thứ tự bảng chữ cái để dễ tìm kiếm", 0], ["Tìm danh sách học sinh muốn tìm hiểu một nội dung Tin học", 0], ["Biết học sinh thuộc những tổ nào ở mỗi nội dung", 0], ["Vẽ hình minh hoạ cho phiếu khảo sát", 1]]}, {"bai": "Bài 7", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Để tạo biểu đồ cột, trong nhóm Charts em chọn lệnh nào?", "Insert Column or Bar Chart"], ["Loại biểu đồ nào rất hữu ích khi cần so sánh các phần với tổng thể?", "Biểu đồ hình quạt tròn"], ["Theo biểu đồ cột Hình 7.2, nội dung nào thu hút sự quan tâm nhiều nhất của học sinh lớp 8A?", "Đồ hoạ máy tính"], ["Theo Hình 7.9, doanh thu công nghiệp phần mềm giai đoạn 2016 – 2020 có xu hướng thế nào?", "Tăng dần qua các năm"]]}, {"bai": "Bài 7", "t": "cat", "q": "Nhờ biểu đồ, em có thể làm được những gì? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Dễ dàng so sánh dữ liệu", 0], ["Nhận định xu hướng thay đổi của dữ liệu", 0], ["Dự đoán xu hướng tăng hay giảm của dữ liệu", 0], ["Tự động sửa dữ liệu sai", 1]]}], "tl": [{"bai": "Bài 1", "t": "dien", "q": "Điền câu trả lời ngắn (không cần dấu, không phân biệt hoa thường).", "o": [{"n": "Từ «digit» (chữ số) trong tiếng Anh có nguồn gốc từ chữ «digitus» trong tiếng Latin, có nghĩa là gì?", "a": ["Ngón tay", "ngón tay", "ngon tay"]}]}, {"bai": "Bài 1", "t": "mo", "q": "Theo kiến trúc Von Neumann, máy tính gồm những bộ phận nào? Em hãy viết các ý đúng.", "y": ["Bộ xử lí", "Bộ nhớ", "Các cổng kết nối với thiết bị vào – ra"]}, {"bai": "Bài 2", "t": "mo", "q": "Những nhận định nào đúng về thông tin số? Em hãy viết các ý đúng.", "y": ["Đa dạng, được thu thập nhanh", "Có nhiều công cụ hỗ trợ tìm kiếm, lưu trữ, xử lí, chia sẻ", "Quyền tác giả được pháp luật bảo hộ"]}, {"bai": "Bài 3", "t": "mo", "q": "Những từ khoá nào được SGK gợi ý khi tìm kiếm về chủ đề năng lượng tái tạo? Em hãy viết các ý đúng.", "y": ["năng lượng tái tạo", "năng lượng thay thế", "ưu, nhược điểm của thuỷ điện"]}, {"bai": "Bài 4", "t": "mo", "q": "Những hành vi nào trên mạng là vi phạm? Em hãy viết các ý đúng.", "y": ["Phát trực tiếp hoặc chia sẻ các vụ bạo lực học đường", "Đưa lên mạng thông tin cá nhân của người khác mà chưa được phép", "Tham gia, chia sẻ, quảng cáo cho trang web cổ vũ bạo lực, đánh bạc"]}, {"bai": "Bài 5", "t": "dien", "q": "Điền câu trả lời ngắn (không cần dấu, không phân biệt hoa thường).", "o": [{"n": "Người sử dụng truy cập vào đâu để tìm kiếm phần mềm mà mình cần để mua và cài đặt?", "a": ["Chợ ứng dụng", "chợ ứng dụng", "cho ung dung"]}]}, {"bai": "Bài 6", "t": "dien", "q": "Điền câu trả lời ngắn (không cần dấu, không phân biệt hoa thường).", "o": [{"n": "Hai bạn cùng tên Trang: bạn Ngô Hà Trang đứng trước bạn Đặng Mai Trang. Để danh sách đúng, em cần bổ sung tiêu chí sắp xếp thứ hai là cột nào?", "a": ["Họ đệm", "họ đệm", "ho dem"]}]}, {"bai": "Bài 7", "t": "dien", "q": "Điền câu trả lời ngắn (không cần dấu, không phân biệt hoa thường).", "o": [{"n": "Để hiển thị nhãn dữ liệu là tỉ lệ phần trăm trên biểu đồ hình quạt tròn, sau khi chọn More Options…, em đánh dấu chọn mục nào?", "a": ["Percentage", "percentage"]}]}, {"bai": "Bài 7", "t": "mo", "q": "Trong Excel, biểu đồ hình quạt tròn thường có thông tin mặc định gồm những gì? Em hãy viết các ý đúng.", "y": ["Tiêu đề", "Chú giải (Legend)"]}], "khoi": "8", "mon": "tin8", "gui_url": "https://script.google.com/macros/s/AKfycbwp5pbI0W4vDrLZbUaOSuNpdTeh5cuZptVkSuIq_VWhjhswSVryoQajxYGjhHOZ2tqQ/exec"};
+const VONG = [
+  {k:"mc", ten:"Vòng 1 · Rung chuông vàng", mo:"Trắc nghiệm nhiều lựa chọn, có tính giờ", icon:"🔔"},
+  {k:"tf", ten:"Vòng 2 · Đúng hay Sai", mo:"Mỗi câu 4 ý a, b, c, d như đề kiểm tra", icon:"✅"},
+  {k:"th", ten:"Vòng 3 · Thực hành", mo:"Ghép đôi, phân loại, sắp xếp thứ tự", icon:"🧩"},
+  {k:"tl", ten:"Vòng 4 · Tự luận ngắn", mo:"Điền kết quả, viết câu trả lời", icon:"✍️"}
+];
+const LOGKEY = "ontap_log_" + BAI.id, QKEY = "ontap_queue_" + BAI.id;
+const $ = s => document.querySelector(s), app = $("#app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuf = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/[\s.,;:!?'"()]/g, "");
+const lsGet = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+
+$("#hTitle").textContent = BAI.ten;
+$("#hSub").textContent = BAI.phamvi;
+addEventListener("online", () => flush());
+
+/* ---------- trạng thái ---------- */
+let S = null; // lượt chơi hiện tại
+const qs = new URLSearchParams(location.search);
+
+/* chọn câu: chia đều theo bài để lượt nào cũng phủ đủ nội dung */
+function pick(list, n) {
+  if (!n || n >= list.length) return shuf(list);
+  const by = {}; list.forEach(x => (by[x.bai || "_"] = by[x.bai || "_"] || []).push(x));
+  const keys = Object.keys(by).map(k => (by[k] = shuf(by[k]), k));
+  const out = []; let i = 0;
+  while (out.length < n) { const k = keys[i % keys.length]; if (by[k].length) out.push(by[k].shift()); i++; if (i > n * 20) break; }
+  return shuf(out);
+}
+
+/* ---------- màn mở đầu ---------- */
+function home() {
+  stopTimer();
+  $("#teamBar").classList.add("hide");
+  const tong = BAI.mc.length + BAI.tf.length + BAI.th.length + BAI.tl.length;
+  app.innerHTML = `
+  <div class="card">
+        <h2 style="margin:0 0 10px">Chọn vòng chơi</h2>
+    <div class="grid2" id="vongs">${VONG.map((v, i) => `<div class="vong on" data-i="${i}"><b>${v.icon} ${v.ten}</b>${v.mo}</div>`).join("")}</div>
+    <div class="row" style="margin-top:14px">
+      <label><input type="radio" name="sl" value="luot" checked> Một lượt</label>
+      <label><input type="radio" name="sl" value="het"> Ôn hết ngân hàng</label>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div><label>Mã học sinh</label><input type="text" id="ma" autocomplete="off" value="${esc(window.ARENA_SID || qs.get("ma") || qs.get("sid") || "")}"><div class="fb bad hide" id="maLoi" style="margin-top:6px;padding:8px 10px;font-size:15px"></div></div>
+      <div><label>Thi đội <span style="font-weight:400;color:var(--mute)">(không bắt buộc)</span></label><input type="text" id="doi"></div>
+    </div>
+    <div class="row" style="margin-top:16px"><button class="btn acc" id="go">▶ Bắt đầu</button></div>
+  </div>`;
+  app.querySelectorAll(".vong").forEach(el => el.onclick = () => el.classList.toggle("on"));
+  $("#ma").oninput = () => { $("#maLoi").classList.add("hide"); $("#ma").style.borderColor = ""; };
+  $("#go").onclick = () => {
+    const on = [...app.querySelectorAll(".vong.on")].map(el => VONG[+el.dataset.i].k);
+    if (!on.length) { alert("Chọn ít nhất một vòng."); return; }
+    const het = app.querySelector('input[name=sl]:checked').value === "het";
+    const doi = $("#doi").value.split(",").map(s => s.trim()).filter(Boolean).slice(0, 6);
+    const ma = $("#ma").value.trim().toUpperCase().replace(/\s+/g, "");
+    if (doi.length === 1) { alert("Thi đội cần ít nhất 2 đội, cách nhau dấu phẩy (VD: Đội 1, Đội 2)."); $("#doi").focus(); return; }
+    if (doi.length < 2) {                       // chơi một mình: bắt buộc mã học sinh
+      const k = BAI.khoi || "67";
+      const re = /^[6-9]$/.test(k) ? new RegExp("^" + k + "A(\\d{1,2}|P)-\\d{2}$") : /^[6-9]A(\d{1,2}|P)-\d{2}$/;
+      if (!ma) { baoMa("Em nhập mã học sinh trước khi bắt đầu (VD " + k[0] + "A1-01)."); return; }
+      if (!re.test(ma) && /^[67]A(\d{1,2}|P)-\d{2}$/.test(ma)) { baoMa("Đây là bài ôn tập khối " + k[0] + " — mã học sinh phải bắt đầu bằng " + k[0] + "A (em nhập mã khối " + ma[0] + ")."); return; }
+      if (!re.test(ma)) { baoMa("Mã «" + ma + "» chưa đúng dạng. Mã gồm lớp, gạch ngang, số thứ tự 2 chữ số — VD " + k[0] + "A1-01, " + k[0] + "A10-05" + (k.includes("7") ? ", 7AP-03" : "") + "."); return; }
+    }
+    start(on, het, doi.length >= 2 ? "" : ma, doi);
+  };
+}
+
+function baoMa(t) { const e = $("#maLoi"); e.textContent = t; e.classList.remove("hide"); $("#ma").style.borderColor = "var(--bad)"; $("#ma").focus(); }
+function start(vongs, het, ma, doi) {
+  const list = {};
+  vongs.forEach(k => list[k] = het ? shuf(BAI[k]) : pick(BAI[k], BAI.so[k]));
+  S = { vongs, list, vi: 0, qi: 0, ma, doi: doi.length >= 2 ? doi.map(t => ({ ten: t, d: 0 })) : null, turn: 0,
+        diem: {}, toi: {}, sai: [], bat: Date.now(), het };
+  vongs.forEach(k => { S.diem[k] = 0; S.toi[k] = 0; });
+  intro();
+}
+
+function teamBar() {
+  const b = $("#teamBar");
+  if (!S.doi) { b.classList.add("hide"); return; }
+  b.classList.remove("hide");
+  b.innerHTML = S.doi.map((t, i) => `<span class="team ${i === S.turn ? "now" : ""}">${esc(t.ten)}: ${Math.round(t.d * 100) / 100}</span>`).join("");
+}
+function cong(k, dat, toi) { S.diem[k] += dat; S.toi[k] += toi; if (S.doi) S.doi[S.turn].d += dat; }
+function nextTurn() { if (S.doi) S.turn = (S.turn + 1) % S.doi.length; }
+
+function intro() {
+  stopTimer();
+  const k = S.vongs[S.vi], v = VONG.find(x => x.k === k);
+  teamBar();
+  app.innerHTML = `<div class="card" style="text-align:center"><div class="big-emoji">${v.icon}</div><h2>${v.ten}</h2><p style="font-size:18px">${v.mo} — ${S.list[k].length} câu</p><button class="btn acc" id="go">Vào vòng</button></div>`;
+  $("#go").onclick = () => { S.qi = 0; show(); };
+}
+
+function show() {
+  const k = S.vongs[S.vi], it = S.list[k][S.qi];
+  if (!it) { S.vi++; if (S.vi < S.vongs.length) intro(); else finish(); return; }
+  teamBar();
+  ({ mc: showMC, tf: showTF, th: showTH, tl: showTL })[k](it);
+}
+function head(k, it) {
+  const n = S.list[k].length, who = S.doi ? ` · Lượt: <b>${esc(S.doi[S.turn].ten)}</b>` : "";
+  return `<div class="row"><span class="prog">${VONG.find(x => x.k === k).ten} · Câu ${S.qi + 1}/${n}${who}</span><span class="grow"></span>${BAI.an_nhan ? "" : (it.bai ? `<span class="tag">${esc(it.bai)}</span>` : "") + (it.muc ? `<span class="tag">${esc(it.muc)}</span>` : "")}</div>`;
+}
+function nextBtn() { return `<div class="row" style="margin-top:14px"><button class="btn" id="nx">Câu tiếp ➜</button></div>`; }
+function bindNext() { const b = $("#nx"); b.onclick = () => { nextTurn(); S.qi++; show(); }; b.focus(); }
+
+/* ---------- đồng hồ ---------- */
+let T = null;
+function startTimer(sec, onEnd) {
+  stopTimer(); const bar = $("#tbar"), t0 = Date.now();
+  T = setInterval(() => { const r = 1 - (Date.now() - t0) / (sec * 1000); if (bar) bar.style.width = Math.max(0, r * 100) + "%"; const tx = $("#tsec"); if (tx) tx.textContent = Math.max(0, Math.ceil(r * sec)) + " giây"; if (r <= 0) { stopTimer(); onEnd(); } }, 200);
+}
+function stopTimer() { if (T) clearInterval(T); T = null; }
+
+/* ---------- AI: gợi ý trước khi chốt, giải thích sau khi chốt (chỉ khi mở trong Đấu trường và có mạng) ---------- */
+const coAI = () => !!(window.google && google.script && google.script.run) && navigator.onLine;
+const aiKhung = (id, nhan) => coAI() ? `<div class="ai" id="${id}"><button class="aib" type="button">${nhan}</button><div class="ait"></div></div>` : "";
+function ganAI(id, ham, q) {
+  const k = $("#" + id); if (!k) return;
+  const b = k.querySelector(".aib"), t = k.querySelector(".ait");
+  b.onclick = () => {
+    b.disabled = true; b.textContent = "…";
+    google.script.run.withSuccessHandler(r => { if (r && r.ok) { t.textContent = r.text; b.remove(); } else k.remove(); })
+      .withFailureHandler(() => k.remove())[ham](Object.assign({ mon: BAI.mon, baiId: BAI.id, ma: S && S.ma || "" }, q));
+  };
+}
+
+/* ---------- vòng 1: trắc nghiệm ---------- */
+function showMC(it) {
+  const opts = shuf(it.opts.map((t, i) => ({ t, ok: i === 0 })));
+  app.innerHTML = `<div class="card">${head("mc", it)}<div class="q">${esc(it.q)}</div>
+    <div class="timer"><i id="tbar"></i></div><div class="prog" id="tsec"></div>
+    <div class="opts">${opts.map((o, i) => `<button class="opt" data-i="${i}"><span class="k">${"ABCD"[i]}</span>${esc(o.t)}</button>`).join("")}</div>${aiKhung("aiH", "💡 Gợi ý")}<div id="fb"></div></div>`;
+  ganAI("aiH", "goiYOnTap", { cau: it.q, phuongAn: it.opts, dapAn: [it.opts[0]] });
+  let done = false;
+  const end = (i) => {
+    if (done) return; done = true; stopTimer();
+    const btns = app.querySelectorAll(".opt");
+    btns.forEach((b, j) => { b.disabled = true; if (opts[j].ok) b.classList.add("ok"); });
+    const ok = i != null && opts[i].ok;
+    if (i != null && !ok) btns[i].classList.add("bad");
+    cong("mc", ok ? 1 : 0, 1);
+    if (!ok) S.sai.push("TN: " + it.q.slice(0, 60));
+    const hb = $("#aiH .aib"); if (hb) $("#aiH").remove();
+    $("#fb").outerHTML = `<div class="fb ${ok ? "ok" : "bad"}">${ok ? "🎉 Chính xác!" : (i == null ? "⏰ Hết giờ! " : "Chưa đúng. ") + "Đáp án: <b>" + esc(it.opts[0]) + "</b>"}${it.gt ? `<div>${esc(it.gt)}</div>` : ""}${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}${aiKhung("aiG", "🤖 Giải thích")}</div>` + nextBtn();
+    ganAI("aiG", "giaiThichOnTap", { cau: it.q, phuongAn: it.opts, dapAn: [it.opts[0]], emChon: i != null ? opts[i].t : "" });
+    bindNext();
+  };
+  app.querySelectorAll(".opt").forEach(b => b.onclick = () => end(+b.dataset.i));
+  startTimer(it.giay || BAI.giay_mc || 25, () => end(null));
+}
+
+/* ---------- vòng 2: đúng / sai ---------- */
+function showTF(it) {
+  const ys = it.y.map((y, i) => ({ t: y[0], d: y[1], g: y[2] || "", n: "abcd"[i] }));
+  const ans = {};
+  app.innerHTML = `<div class="card">${head("tf", it)}<div class="q">${esc(it.q)}</div>
+    <div class="timer"><i id="tbar"></i></div><div class="prog" id="tsec"></div>
+    <div id="tfl">${ys.map((y, i) => `<div class="tf" data-i="${i}"><div><b>${y.n})</b> ${esc(y.t)}<div class="src gx hide"></div></div><div class="bt"><button class="btn ghost sm" data-v="1">Đúng</button><button class="btn ghost sm" data-v="0">Sai</button></div></div>`).join("")}</div>
+    ${aiKhung("aiH", "💡 Gợi ý")}<div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Chốt đáp án</button></div><div id="fb"></div></div>`;
+  const tfCau = it.q + " " + ys.map(y => y.n + ") " + y.t).join(" ; ");
+  ganAI("aiH", "goiYOnTap", { cau: tfCau, phuongAn: [], dapAn: [] });
+  app.querySelectorAll(".tf").forEach(r => r.querySelectorAll("button").forEach(b => b.onclick = () => {
+    ans[r.dataset.i] = b.dataset.v === "1"; r.querySelectorAll("button").forEach(x => x.classList.remove("sel")); b.classList.add("sel");
+  }));
+  let done = false;
+  const end = () => {
+    if (done) return; done = true; stopTimer();
+    let dung = 0;
+    app.querySelectorAll(".tf").forEach(r => {
+      const y = ys[r.dataset.i], a = ans[r.dataset.i], ok = a === y.d; if (ok) dung++;
+      r.style.background = ok ? "#e3f7ec" : "#fde8e8";
+      r.querySelectorAll("button").forEach(b => { b.disabled = true; if ((b.dataset.v === "1") === y.d) b.classList.add("ok"); });
+      const g = r.querySelector(".gx"); g.classList.remove("hide"); g.textContent = (y.d ? "Đúng" : "Sai") + (y.g ? " — " + y.g : "");
+      if (!ok) S.sai.push("ĐS: " + y.t.slice(0, 60));
+    });
+    cong("tf", dung / 4, 1);
+    $("#chk").remove();
+    if ($("#aiH .aib")) $("#aiH").remove();
+    $("#fb").outerHTML = `<div class="fb ${dung === 4 ? "ok" : "bad"}">Đúng ${dung}/4 ý.${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}${aiKhung("aiG", "🤖 Giải thích")}</div>` + nextBtn();
+    ganAI("aiG", "giaiThichOnTap", { cau: tfCau, phuongAn: [], dapAn: ys.map(y => y.n + ") " + (y.d ? "Đúng" : "Sai")) });
+    bindNext();
+  };
+  $("#chk").onclick = end;
+  startTimer(it.giay || BAI.giay_tf || 60, end);
+}
+
+/* ---------- vòng 3: thực hành ---------- */
+function showTH(it) {
+  const box = `<div class="card">${head("th", it)}<div class="q">${esc(it.q)}</div><div id="th"></div><div id="fb"></div></div>`;
+  app.innerHTML = box;
+  ({ match: thMatch, cat: thCat, sort: thSort })[it.t](it, $("#th"));
+}
+function thDone(it, dat, toi, msg) {
+  cong("th", dat / toi, 1);
+  $("#fb").outerHTML = `<div class="fb ${dat === toi ? "ok" : "bad"}">${msg}${it.gt ? `<div>${esc(it.gt)}</div>` : ""}${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}</div>` + nextBtn();
+  bindNext();
+}
+function thMatch(it, el) {
+  const L = shuf(it.p.map((p, i) => ({ t: p[0], i }))), R = shuf(it.p.map((p, i) => ({ t: p[1], i })));
+  el.innerHTML = `<p class="prog">Bấm một thẻ bên trái rồi bấm thẻ khớp bên phải.</p><div class="grid2"><div class="m-col" id="ml">${L.map(x => `<button class="chip" data-i="${x.i}">${esc(x.t)}</button>`).join("")}</div><div class="m-col" id="mr">${R.map(x => `<button class="chip" data-i="${x.i}">${esc(x.t)}</button>`).join("")}</div></div>`;
+  let pick = null, sai = new Set(), xong = 0;
+  el.querySelectorAll("#ml .chip").forEach(b => b.onclick = () => { if (b.classList.contains("done")) return; el.querySelectorAll("#ml .chip").forEach(x => x.classList.remove("pick")); b.classList.add("pick"); pick = b; });
+  el.querySelectorAll("#mr .chip").forEach(b => b.onclick = () => {
+    if (!pick || b.classList.contains("done")) return;
+    if (pick.dataset.i === b.dataset.i) { pick.classList.remove("pick"); pick.classList.add("done"); b.classList.add("done"); pick = null; xong++;
+      if (xong === it.p.length) { const d = it.p.length - sai.size; thDone(it, d, it.p.length, `Hoàn thành! Ghép đúng ngay lần đầu ${d}/${it.p.length} cặp.`); } }
+    else { sai.add(pick.dataset.i); S.sai.push("Ghép: " + it.p[pick.dataset.i][0].slice(0, 40)); [pick, b].forEach(x => { x.classList.remove("wrong"); void x.offsetWidth; x.classList.add("wrong"); }); }
+  });
+}
+function thCat(it, el) {
+  const items = shuf(it.items.map((x, i) => ({ t: x[0], c: x[1], i })));
+  const where = {};
+  el.innerHTML = `<p class="prog">Bấm một thẻ rồi bấm vào ô đúng của nó. Xếp xong bấm «Kiểm tra».</p><div class="pool" id="pool"></div>
+    <div class="cats">${it.cats.map((c, j) => `<div class="cat" data-c="${j}"><h4>${esc(c)}</h4><div class="in"></div></div>`).join("")}</div>
+    <div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Kiểm tra</button></div>`;
+  let pick = null;
+  const draw = () => {
+    $("#pool").innerHTML = items.filter(x => where[x.i] == null).map(x => `<button class="chip ${pick === x.i ? "pick" : ""}" data-i="${x.i}">${esc(x.t)}</button>`).join("") || `<span class="prog">Đã xếp hết thẻ.</span>`;
+    el.querySelectorAll(".cat").forEach(c => c.querySelector(".in").innerHTML = items.filter(x => where[x.i] === +c.dataset.c).map(x => `<button class="chip ${pick === x.i ? "pick" : ""}" data-i="${x.i}">${esc(x.t)}</button>`).join(""));
+    el.querySelectorAll(".chip").forEach(b => b.onclick = e => { e.stopPropagation(); if (lock) return; pick = +b.dataset.i; draw(); });
+  };
+  let lock = false;
+  el.querySelectorAll(".cat").forEach(c => c.onclick = () => { if (lock || pick == null) return; where[pick] = +c.dataset.c; pick = null; draw(); });
+  draw();
+  $("#chk").onclick = () => {
+    if (items.some(x => where[x.i] == null)) { alert("Còn thẻ chưa xếp."); return; }
+    lock = true; let d = 0;
+    el.querySelectorAll(".cat .chip").forEach(b => { const x = items.find(y => y.i === +b.dataset.i); const ok = x.c === where[x.i]; if (ok) d++; else { S.sai.push("Phân loại: " + x.t.slice(0, 40)); b.textContent += " → " + it.cats[x.c]; } b.classList.add(ok ? "done" : "wrong"); b.style.background = ok ? "" : "#fde8e8"; });
+    $("#chk").remove();
+    thDone(it, d, items.length, `Xếp đúng ${d}/${items.length} thẻ.`);
+  };
+}
+function thSort(it, el) {
+  let ord = shuf(it.items.map((t, i) => ({ t, i })));
+  if (ord.every((x, k) => x.i === k)) ord.reverse();
+  const draw = (lock) => {
+    el.innerHTML = `<p class="prog">Dùng nút ▲ ▼ để đưa về đúng thứ tự. Xong bấm «Kiểm tra».</p><div class="sortl">${ord.map((x, k) => `<div class="it" data-k="${k}"><b>${k + 1}.</b><span>${esc(x.t)}</span>${lock ? "" : `<button class="btn ghost sm" data-u="${k}">▲</button><button class="btn ghost sm" data-d="${k}">▼</button>`}</div>`).join("")}</div>${lock ? "" : `<div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Kiểm tra</button></div>`}`;
+    if (lock) return;
+    el.querySelectorAll("[data-u]").forEach(b => b.onclick = () => { const k = +b.dataset.u; if (k > 0) { [ord[k - 1], ord[k]] = [ord[k], ord[k - 1]]; draw(); } });
+    el.querySelectorAll("[data-d]").forEach(b => b.onclick = () => { const k = +b.dataset.d; if (k < ord.length - 1) { [ord[k + 1], ord[k]] = [ord[k], ord[k + 1]]; draw(); } });
+    $("#chk").onclick = () => {
+      draw(true); let d = 0;
+      el.querySelectorAll(".it").forEach((r, k) => { const ok = ord[k].i === k; if (ok) d++; r.classList.add(ok ? "ok" : "bad"); });
+      if (d < ord.length) S.sai.push("Sắp xếp: " + it.q.slice(0, 50));
+      thDone(it, d, ord.length, `Đúng vị trí ${d}/${ord.length}. Thứ tự đúng: ${it.items.map(esc).join(" → ")}`);
+    };
+  };
+  draw(false);
+}
+
+/* ---------- vòng 4: tự luận ---------- */
+function showTL(it) {
+  if (it.t === "mo") return showOpen(it);
+  app.innerHTML = `<div class="card">${head("tl", it)}<div class="q">${esc(it.q)}</div>
+    <div class="grid2">${it.o.map((o, i) => `<div><label>${esc(o.n)}</label><input type="text" data-i="${i}" autocomplete="off"></div>`).join("")}</div>
+    ${aiKhung("aiH", "💡 Gợi ý")}<div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Nộp câu trả lời</button></div><div id="fb"></div></div>`;
+  const tlCau = it.q + " " + it.o.map(o => o.n).join(" ; "), tlDung = it.o.map(o => o.a[0]);
+  ganAI("aiH", "goiYOnTap", { cau: tlCau, phuongAn: [], dapAn: tlDung });
+  const ins = app.querySelectorAll("input"); ins[0].focus();
+  ins.forEach(x => x.onkeydown = e => { if (e.key === "Enter") $("#chk").click(); });
+  $("#chk").onclick = () => {
+    let d = 0;
+    ins.forEach(x => { const o = it.o[+x.dataset.i], v = norm(x.value); const ok = o.a.some(a => norm(a) === v); if (ok) d++; else S.sai.push("TL: " + o.n.slice(0, 40)); x.style.borderColor = ok ? "var(--ok)" : "var(--bad)"; x.disabled = true; if (!ok) x.value += "   ✗ đáp án: " + o.a[0]; });
+    cong("tl", d / it.o.length, 1);
+    $("#chk").remove();
+    if ($("#aiH .aib")) $("#aiH").remove();
+    $("#fb").outerHTML = `<div class="fb ${d === it.o.length ? "ok" : "bad"}">Đúng ${d}/${it.o.length} ô.${it.gt ? `<div>${esc(it.gt)}</div>` : ""}${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}${aiKhung("aiG", "🤖 Giải thích")}</div>` + nextBtn();
+    ganAI("aiG", "giaiThichOnTap", { cau: tlCau, phuongAn: [], dapAn: tlDung });
+    bindNext();
+  };
+}
+function showOpen(it) {
+  app.innerHTML = `<div class="card">${head("tl", it)}<div class="q">${esc(it.q)}</div>
+    <textarea id="tv" placeholder="Viết câu trả lời của em ở đây…"></textarea><div class="prog" id="dem"></div>
+    <div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Xem gợi ý và tự chấm</button></div><div id="fb"></div></div>`;
+  const tv = $("#tv"), cau = () => tv.value.split(/[.!?…]+/).map(s => s.trim()).filter(s => s.split(/\s+/).length >= 3).length;
+  tv.oninput = () => $("#dem").textContent = `Em đã viết khoảng ${cau()} câu.` + (it.cau ? ` Yêu cầu: ${it.cau[0]}–${it.cau[1]} câu.` : "");
+  tv.focus();
+  $("#chk").onclick = () => {
+    tv.disabled = true; $("#chk").remove();
+    const c = cau(), dCau = it.cau ? (c >= it.cau[0] && c <= it.cau[1]) : null;
+    $("#fb").outerHTML = `<div class="fb ok"><b>Gợi ý — em đánh dấu những ý mình đã viết được:</b>
+      ${it.y.map((y, i) => `<div><label style="font-weight:400"><input type="checkbox" data-i="${i}"> ${esc(y)}</label></div>`).join("")}
+      ${dCau != null ? `<div style="margin-top:6px">${dCau ? "✔" : "✗"} Độ dài: ${c} câu (yêu cầu ${it.cau[0]}–${it.cau[1]} câu)</div>` : ""}
+      ${it.mau ? `<details style="margin-top:8px"><summary>Xem đoạn văn mẫu</summary><p>${esc(it.mau)}</p></details>` : ""}
+      ${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}</div>
+      <div class="row" style="margin-top:14px"><button class="btn" id="nx">Chấm xong ➜</button></div>`;
+    $("#nx").onclick = () => {
+      const k = app.querySelectorAll('input[type=checkbox]:checked').length, tot = it.y.length + (dCau != null ? 1 : 0);
+      const d = (k + (dCau ? 1 : 0)) / tot; cong("tl", d, 1);
+      if (d < 1) S.sai.push("Tự luận: " + it.q.slice(0, 40));
+      S.tl_bai = S.tl_bai || []; S.tl_bai.push(tv.value.slice(0, 500));
+      nextTurn(); S.qi++; show();
+    };
+  };
+}
+
+/* ---------- tổng kết + ghi vết ---------- */
+function finish() {
+  stopTimer();
+  let dat = 0, toi = 0; S.vongs.forEach(k => { dat += S.diem[k]; toi += S.toi[k]; });
+  const thang10 = toi ? Math.round(dat / toi * 100) / 10 : 0;
+  const rec = { rid: BAI.id + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 7), bai: BAI.id, ten: BAI.ten, ma: S.ma || (S.doi ? "THI-DOI" : ""), luc: new Date().toISOString(), giay: Math.round((Date.now() - S.bat) / 1000),
+    diem10: thang10, vong: Object.fromEntries(S.vongs.map(k => [k, `${Math.round(S.diem[k] * 100) / 100}/${S.toi[k]}`])),
+    doi: S.doi ? S.doi.map(t => t.ten + ": " + Math.round(t.d * 100) / 100) : null, sai: S.sai.slice(0, 40), het: S.het };
+  const log = lsGet(LOGKEY, []); log.push(rec); lsSet(LOGKEY, log.slice(-500));
+  teamBar();
+  const msg = thang10 >= 8 ? "Xuất sắc! 🏆" : thang10 >= 6.5 ? "Tốt lắm! 👍" : thang10 >= 5 ? "Đạt — ôn thêm chỗ sai nhé 💪" : "Cần ôn lại — chơi thêm lượt nữa nhé 📚";
+  const xh = S.doi ? S.doi.slice().sort((a, b) => b.d - a.d) : null;
+  app.innerHTML = `<div class="card"><h2 style="text-align:center;margin:0">Tổng kết</h2>
+    ${xh ? `<div class="big-emoji">🏆</div><h2 style="text-align:center">${esc(xh[0].ten)} dẫn đầu</h2><table><tr><th>Hạng</th><th>Đội</th><th>Điểm</th></tr>${xh.map((t, i) => `<tr><td>${i + 1}</td><td>${esc(t.ten)}</td><td>${Math.round(t.d * 100) / 100}</td></tr>`).join("")}</table>` :
+      `<div class="score">${thang10.toString().replace(".", ",")}</div><p style="text-align:center;font-size:20px">${msg}</p>`}
+    <table style="margin-top:12px"><tr><th>Vòng</th><th>Kết quả</th></tr>${S.vongs.map(k => `<tr><td>${VONG.find(v => v.k === k).ten}</td><td>${Math.round(S.diem[k] * 100) / 100} / ${S.toi[k]}</td></tr>`).join("")}</table>
+    ${S.sai.length ? `<details style="margin-top:12px"><summary>Các ý cần ôn lại (${S.sai.length})</summary><ul>${S.sai.map(s => `<li>${esc(s)}</li>`).join("")}</ul></details>` : ""}
+    <p class="prog" id="gui">${S.ma ? "Đang lưu kết quả…" : "Kết quả đã lưu trên máy này (📒 Lịch sử)."}</p>
+    <div class="row"><button class="btn acc" id="again">🔁 Chơi lượt mới</button><button class="btn ghost" id="hm">Về đầu</button></div></div>`;
+  $("#again").onclick = () => start(S.vongs, S.het, S.ma, S.doi ? S.doi.map(t => t.ten) : []);
+  $("#hm").onclick = home;
+  send(rec);
+}
+
+/* Gửi kết quả — giống các bài tập của Đấu trường:
+   lưu ngay trên máy (hàng chờ), có mạng thì tự gửi; mất mạng giữa chừng không mất bài.
+   Mỗi lượt có mã riêng (rid) để bảng điểm không ghi trùng khi gửi lại. */
+const GUI_URL = BAI.gui_url || "";
+/* Gói kết quả theo đúng mẫu ACTIVITY_RESULTS của Đấu trường: mode «review» = Ôn tập (chuyên cần tính riêng). */
+function goiDauTruong(r) {
+  const parts = Object.values(r.vong || {}).map(v => String(v).split("/").map(Number));
+  const dat = parts.reduce((a, x) => a + (x[0] || 0), 0), toi = parts.reduce((a, x) => a + (x[1] || 0), 0);
+  return { eventId: r.rid, mode: "review", subject: BAI.mon, grade: Number(BAI.khoi || 6), lessonId: BAI.id, lessonNo: 0,
+    lessonTitle: BAI.ten, studentId: r.ma, score: r.diem10, correct: Math.round(dat), total: toi,
+    durationSeconds: r.giay, startedAtMs: Date.parse(r.luc) - r.giay * 1000 };
+}
+function send(rec) {
+  if (!rec.ma || rec.ma === "THI-DOI") { flush(); return; }          // thi đội: chỉ lưu trên máy
+  const q = lsGet(QKEY, []); q.push(rec); lsSet(QKEY, q.slice(-300)); flush();
+}
+function trangThai(t) { const g = $("#gui"); if (g) g.textContent = t; }
+let dangGui = false;
+async function flush() {
+  const q = lsGet(QKEY, []);
+  const choGui = q.length;
+  if (!choGui) return;
+  const gs = window.google && google.script && google.script.run;   // mở ngay trong Web App Đấu trường
+  if (!GUI_URL && !gs) { trangThai("✔ Đã lưu kết quả."); return; }
+  if (!navigator.onLine) { trangThai("✔ Đã lưu kết quả."); return; }
+  if (dangGui) return; dangGui = true;
+  const con = [];
+  for (const r of q) {
+    try {
+      const goi = goiDauTruong(r);
+      if (gs) await new Promise((ok, loi) => google.script.run.withSuccessHandler(x => (x && x.ok === false) ? loi(new Error(x.message)) : ok(x)).withFailureHandler(loi).saveArenaOfflineResult(goi));
+      else await fetch(GUI_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "ontap_result", data: goi }) });
+      const log = lsGet(LOGKEY, []); const x = log.find(y => y.rid === r.rid); if (x) { x.da_gui = new Date().toISOString(); lsSet(LOGKEY, log); }
+    } catch (e) { con.push(r); }
+  }
+  const moi = lsGet(QKEY, []).filter(r => !q.some(y => y.rid === r.rid));   // lượt mới thêm trong lúc gửi
+  lsSet(QKEY, con.concat(moi)); dangGui = false;
+  trangThai("✔ Đã lưu kết quả.");
+}
+addEventListener("message", e => { if (e.data && e.data.type === "ONTAP_ACK" && e.data.rid) lsSet(QKEY, lsGet(QKEY, []).filter(r => r.rid !== e.data.rid)); });
+setInterval(flush, 30000); setTimeout(flush, 1500);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) flush(); });
+if ("serviceWorker" in navigator && location.protocol.startsWith("http") && !(window.google && google.script)) navigator.serviceWorker.register("sw.js").catch(() => {});
+
+/* ---------- lịch sử trên máy (cho giáo viên) ---------- */
+$("#btnLog").onclick = () => {
+  stopTimer();
+  const log = lsGet(LOGKEY, []).slice().reverse();
+  app.innerHTML = `<div class="card"><div class="row"><h2 style="margin:0">📒 Lịch sử lượt chơi trên máy này (${log.length})</h2><span class="grow"></span><button class="btn sm" id="csv">Tải CSV</button><button class="btn sm ghost" id="hm">Đóng</button></div>
+    <div style="overflow:auto;margin-top:10px"><table><tr><th>Lúc</th><th>Mã / Đội</th><th>Điểm /10</th><th>Từng vòng</th><th>Thời gian</th><th>Ý sai</th><th>Gửi</th></tr>
+    ${log.map(r => `<tr><td>${new Date(r.luc).toLocaleString("vi-VN")}</td><td>${esc(r.ma || "—")}${r.doi ? "<br>" + r.doi.map(esc).join("<br>") : ""}</td><td><b>${r.diem10}</b></td><td>${Object.entries(r.vong).map(([k, v]) => k.toUpperCase() + " " + v).join("<br>")}</td><td>${Math.floor(r.giay / 60)}′${r.giay % 60}″</td><td>${r.sai.length}</td><td>${r.da_gui ? "✔" : (r.ma && r.ma !== "THI-DOI" ? "⏳" : "—")}</td></tr>`).join("")}</table></div>
+    <div class="row" style="margin-top:10px"><button class="btn sm ghost" id="xoa">Xoá lịch sử trên máy</button></div></div>`;
+  $("#hm").onclick = home;
+  $("#xoa").onclick = () => { if (confirm("Xoá toàn bộ lịch sử lượt chơi trên máy này?")) { lsSet(LOGKEY, []); $("#btnLog").click(); } };
+  $("#csv").onclick = () => {
+    const rows = [["luc", "ma", "diem10", "vong", "giay", "so_y_sai", "y_sai"]].concat(log.map(r => [r.luc, r.ma, r.diem10, Object.entries(r.vong).map(([k, v]) => k + " " + v).join(" | "), r.giay, r.sai.length, r.sai.join(" | ")]));
+    const csv = "﻿" + rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = BAI.id + "_lich-su.csv"; a.click();
+  };
+};
+
+home();
+</script>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ôn tập cuối học kì I — Tin học 9</title>
+<link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg"><meta name="theme-color" content="#13235e">
+<style>
+:root{--bg:#0b1640;--bg2:#13235e;--card:#ffffff;--ink:#14204a;--mute:#5b6690;--acc:#ffc93c;--ok:#1fa463;--bad:#e5484d;--pri:#2f6bff;--line:#d9def0}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{font-family:"Segoe UI",Roboto,Arial,sans-serif;background:radial-gradient(1200px 600px at 50% -10%,#2a4bb8 0,var(--bg) 60%);color:#fff;min-height:100vh}
+.wrap{max-width:1100px;margin:0 auto;padding:16px}
+header{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+header .grow{min-width:220px}
+header h1{font-size:clamp(20px,3.2vw,34px);margin:0;letter-spacing:.5px}
+header .sub{color:#c9d3ff;font-size:14px}
+.pill{background:rgba(255,255,255,.12);border-radius:999px;padding:6px 12px;font-size:14px}
+.identity{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.identity .pill{font-size:12px;padding:4px 10px}
+.ai{margin-top:10px}.aib{background:none;border:1px solid #c8d2f0;border-radius:999px;padding:5px 12px;font-size:14px;color:#2f4a9a;cursor:pointer;font-family:inherit}.aib:disabled{opacity:.6}.ait{font-size:15px;color:#33406b;margin-top:6px;line-height:1.45}
+.tacquyen{font-size:11px;color:#9fb0e6;margin-top:6px}
+.grow{flex:1}
+.card{background:var(--card);color:var(--ink);border-radius:18px;padding:20px;box-shadow:0 10px 30px rgba(0,0,0,.25);margin-top:16px}
+.btn{border:0;border-radius:12px;padding:12px 18px;font-size:17px;font-weight:600;cursor:pointer;background:var(--pri);color:#fff}
+.btn:disabled{opacity:.5;cursor:default}
+.btn.ghost{background:#eef1fb;color:var(--ink)}
+.btn.acc{background:var(--acc);color:#1b1b1b}
+.btn.ok{background:var(--ok)}
+.btn.sm{padding:8px 12px;font-size:14px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+input[type=text],textarea{font-size:18px;padding:10px 12px;border:2px solid var(--line);border-radius:10px;width:100%;font-family:inherit}
+textarea{min-height:150px}
+label{font-weight:600}
+.vong{border:2px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;background:#f7f9ff}
+.vong b{display:block;font-size:18px;margin-bottom:4px}
+.vong.on{border-color:var(--pri);background:#e9f0ff}
+.q{font-size:clamp(19px,2.4vw,26px);font-weight:600;line-height:1.4;margin:6px 0 14px}
+.tag{display:inline-block;max-width:100%;white-space:normal;background:#eef1fb;color:var(--mute);border-radius:8px;padding:3px 8px;font-size:13px;margin-right:6px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.opt{border:2px solid var(--line);background:#fff;border-radius:14px;padding:14px 16px;font-size:clamp(17px,2vw,21px);text-align:left;cursor:pointer;color:var(--ink);font-family:inherit}
+.opt:hover{border-color:var(--pri)}
+.opt .k{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:#eef1fb;margin-right:10px;font-weight:700}
+.opt.ok{background:#e3f7ec;border-color:var(--ok)}
+.opt.bad{background:#fde8e8;border-color:var(--bad)}
+.timer{height:10px;background:#eef1fb;border-radius:99px;overflow:hidden;margin:8px 0 14px}
+.timer i{display:block;height:100%;background:linear-gradient(90deg,var(--ok),var(--acc),var(--bad));width:100%;transition:width .2s linear}
+.fb{margin-top:14px;padding:12px 14px;border-radius:12px;font-size:17px}
+.fb.ok{background:#e3f7ec;color:#0d5b34}
+.fb.bad{background:#fde8e8;color:#8a1c1f}
+.src{color:var(--mute);font-size:13px;margin-top:6px}
+.tf{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;border-bottom:1px dashed var(--line);padding:10px 0;font-size:clamp(16px,1.9vw,20px)}
+.tf .bt{display:flex;gap:6px}
+.tf button{min-width:58px}
+.sel{outline:3px solid var(--pri)}
+.m-col{display:flex;flex-direction:column;gap:10px}
+.chip{border:2px solid var(--line);border-radius:12px;padding:12px;background:#fff;cursor:pointer;font-size:clamp(15px,1.8vw,19px);color:var(--ink);text-align:left;font-family:inherit}
+.chip.pick{border-color:var(--pri);background:#e9f0ff}
+.chip.done{border-color:var(--ok);background:#e3f7ec;cursor:default}
+.chip.wrong{animation:sh .35s;border-color:var(--bad)}
+@keyframes sh{0%,100%{transform:none}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px}
+.cat{border:2px dashed #a9b4dc;border-radius:14px;padding:10px;min-height:120px;background:#f7f9ff;cursor:pointer}
+.cat h4{margin:0 0 8px;font-size:17px}
+.cat .chip{margin:4px 0;width:100%}
+.pool{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}
+.sortl{display:flex;flex-direction:column;gap:8px}
+.sortl .it{display:flex;align-items:center;gap:8px;border:2px solid var(--line);border-radius:12px;padding:8px 10px;background:#fff;font-size:clamp(16px,1.9vw,20px)}
+.sortl .it span{flex:1}
+.sortl .it.ok{border-color:var(--ok);background:#e3f7ec}
+.sortl .it.bad{border-color:var(--bad);background:#fde8e8}
+.score{font-size:64px;font-weight:800;color:var(--pri);text-align:center}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#eef1fb}
+.teams{display:flex;gap:8px;flex-wrap:wrap}
+.team{background:rgba(255,255,255,.14);border-radius:12px;padding:6px 12px;font-weight:700}
+.team.now{background:var(--acc);color:#1b1b1b}
+.draft{font-size:12px;color:#c9d3ff;margin-top:18px;text-align:center}
+.hide{display:none!important}
+.prog{font-size:14px;color:var(--mute)}
+.big-emoji{font-size:54px;text-align:center}
+@media (max-width:600px){.wrap{padding:10px}.card{padding:14px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="big-emoji" style="font-size:40px">🔔</div>
+    <div class="grow">
+      <h1 id="hTitle"></h1>
+      <div class="sub" id="hSub"></div>
+      <div class="identity"><span class="pill">TRƯỜNG THCS CHÁNH HƯNG</span><span class="pill">Tổ Tin học</span><span class="pill">Giáo viên: Ngô Thị Phương Mai</span></div>
+      <div class="tacquyen">© 2026 Ngô Thị Phương Mai · Bản quyền nội dung thuộc tác giả</div>
+    </div>
+    <button class="btn sm ghost" id="btnLog" title="Lịch sử các lượt chơi trên máy này">📒 Lịch sử</button>
+  </header>
+  <div id="teamBar" class="teams hide" style="margin-top:12px"></div>
+  <main id="app"></main>
+  <div class="draft">TRƯỜNG THCS CHÁNH HƯNG · Tổ Tin học · © 2026 Ngô Thị Phương Mai</div>
+</div>
+<script>
+const BAI = {"id": "ON-TAP-CK1-TIN9", "ten": "Ôn tập cuối học kì I — Tin học 9", "phamvi": "Bài 1 → Bài 8 · Chủ đề 1 Máy tính và cộng đồng · Chủ đề 2 Tổ chức lưu trữ, tìm kiếm và trao đổi thông tin · Chủ đề 3 Đạo đức, pháp luật và văn hoá trong môi trường số · Chủ đề 4 Ứng dụng tin học (mô phỏng, trình bày thông tin)", "so": {"mc": 10, "tf": 4, "th": 4, "tl": 3}, "giay_mc": 25, "giay_tf": 60, "mc": [{"bai": "Bài 1", "q": "Nhận định nào đúng về tác động của công nghệ thông tin?", "opts": ["CNTT có tác động tích cực đến con người và xã hội nhiều hơn so với tác động tiêu cực", "CNTT chỉ có tác động tiêu cực", "CNTT không có tác động gì", "CNTT chỉ tác động đến người lớn"]}, {"bai": "Bài 1", "q": "Khi em nhấn nút chuyển kênh trên bộ điều khiển, ti vi chuyển sang kênh em yêu cầu. Để làm việc đó, ti vi phải được gắn gì?", "opts": ["Một bộ xử lí thông tin", "Một máy in", "Một bàn phím", "Một ổ đĩa quang"]}, {"bai": "Bài 1", "q": "Sự đa dạng của các thiết bị có gắn bộ xử lí tạo nên điều gì?", "opts": ["Thế giới kĩ thuật số", "Thế giới động vật", "Thế giới cổ đại", "Thế giới không có mạng"]}, {"bai": "Bài 1", "q": "Trong giáo dục, công nghệ thông tin giúp con người điều gì?", "opts": ["Chia sẻ kiến thức, kĩ năng và cổ vũ thái độ sống tích cực", "Không cần đến trường", "Không cần đọc sách", "Chỉ để giải trí"]}, {"bai": "Bài 1", "q": "Máy tính hiệu năng cao được sử dụng để làm gì trong khoa học và kĩ thuật?", "opts": ["Mô phỏng dòng chảy của chất lỏng, chất khí… mà nghiên cứu thực tế rất khó", "Chỉ để chơi trò chơi", "Chỉ để soạn thảo văn bản", "Thay thế các nhà khoa học"]}, {"bai": "Bài 1", "q": "Việc sử dụng công nghệ không đúng cách và thiếu trách nhiệm có thể dẫn đến điều gì?", "opts": ["Ảnh hưởng xấu đến sức khoẻ thể chất và tinh thần", "Học giỏi hơn", "Khoẻ mạnh hơn", "Không ảnh hưởng gì"]}, {"bai": "Bài 1", "q": "Cỗ máy xử lí thông tin đắt tiền nhất được tạo ra được nhắc đến trong SGK là gì?", "opts": ["Kính viễn vọng không gian Hubble", "Máy rút tiền ATM", "Ô tô tự động lái", "Robot lau nhà"]}, {"bai": "Bài 1", "q": "Trong y tế, máy tính giúp bác sĩ điều gì?", "opts": ["Hiểu cơ thể con người, chẩn đoán rối loạn về thể chất và tinh thần", "Thay thế hoàn toàn bác sĩ", "Chỉ để thanh toán viện phí", "Chỉ để chiếu phim"]}, {"bai": "Bài 2", "q": "An gọi số điện thoại trên trang web của nông trại nhưng không được vì số đã đổi mà trang web chưa cập nhật. Thông tin An nhận được thiếu tiêu chí nào?", "opts": ["Tính mới", "Tính đầy đủ", "Tính sử dụng được", "Không thiếu tiêu chí nào"]}, {"bai": "Bài 2", "q": "Tính sử dụng được của thông tin còn được gọi là gì?", "opts": ["Tính liên quan, phù hợp với vấn đề hay câu hỏi được đặt ra", "Tính cập nhật", "Tính bao quát", "Tính bảo mật"]}, {"bai": "Bài 2", "q": "An thấy lời giới thiệu ấn tượng trên trang web và vội vàng chọn trường mà không kiểm tra. Điều gì có thể xảy ra?", "opts": ["Quyết định có thể không đúng do dựa trên thông tin chưa được kiểm chứng", "Chắc chắn chọn đúng trường", "Không ảnh hưởng gì", "An sẽ có thêm nhiều nguyện vọng"]}, {"bai": "Bài 2", "q": "Chất lượng thông tin thể hiện ở điều gì?", "opts": ["Mức độ đáp ứng của thông tin đối với các yêu cầu cụ thể nhằm giải quyết vấn đề", "Số trang của tài liệu", "Số lượt xem trên mạng", "Độ đẹp của hình ảnh"]}, {"bai": "Bài 2", "q": "Khi thấy một KOL (người có ảnh hưởng) quảng cáo sản phẩm trên mạng, em nên ứng xử thế nào?", "opts": ["Cân nhắc, đánh giá chất lượng thông tin trước khi sử dụng sản phẩm", "Chia sẻ ngay vì KOL là nguồn tin đáng tin cậy", "Mua ngay vì KOL đảm bảo sản phẩm đã qua kiểm định", "Không bao giờ đọc thông tin trên mạng"]}, {"bai": "Bài 2", "q": "Thông tin sai điểm tuyển sinh, sai tên hoặc sai địa chỉ trường vi phạm tiêu chí nào?", "opts": ["Tính chính xác", "Tính mới", "Tính đầy đủ", "Tính sử dụng được"]}, {"bai": "Bài 2", "q": "Nhận định nào đúng về thông tin trên Internet?", "opts": ["Internet là kho thông tin khổng lồ nhưng không phải thông tin nào cũng sử dụng được để giải quyết vấn đề hiệu quả", "Mọi thông tin trên Internet đều chính xác", "Internet có ít thông tin", "Thông tin trên Internet không bao giờ lỗi thời"]}, {"bai": "Bài 2", "q": "Minh tìm thêm thông tin trên website của các nhà cung cấp dịch vụ viễn thông và liên hệ thành công với nông trại. Điều này cho thấy gì?", "opts": ["Minh đã tìm được thông tin có chất lượng từ nguồn khác để giải quyết vấn đề", "Minh gặp may mắn", "Thông tin trên mạng luôn sai", "Không cần tìm thông tin"]}, {"bai": "Bài 2", "q": "Tiêu chí nào xem xét: «Nội dung có cụ thể không? Có cách để xác minh hay không?»", "opts": ["Tính chính xác, đúng đắn", "Tính mới", "Tính đầy đủ", "Tính sử dụng được"]}, {"bai": "Bài 2", "q": "An không để ý đến thời gian đăng kí nguyện vọng dự thi vào lớp 10. Sơ suất này vi phạm tiêu chí nào về chất lượng thông tin?", "opts": ["Tính đầy đủ", "Tính chính xác", "Tính sử dụng được", "Không vi phạm tiêu chí nào"]}, {"bai": "Bài 3", "q": "Để kiểm tra thông tin về trường có bị lỗi thời không, em làm thế nào?", "opts": ["Kiểm tra ngày đăng bài hoặc ngày cuối cùng được đề cập trong bài viết", "Đếm số chữ trong bài", "Xem số hình ảnh", "Xem màu chữ"]}, {"bai": "Bài 3", "q": "Những đánh giá tiêu cực về một trường THPT qua một sự việc cụ thể cần được xử lí thế nào?", "opts": ["Kiểm chứng qua nhiều nguồn thông tin khác nhau", "Tin ngay và chia sẻ", "Bỏ qua mọi thông tin khác", "Đăng lên mạng xã hội"]}, {"bai": "Bài 3", "q": "Trong bài thực hành, mục đích tìm kiếm thông tin là gì?", "opts": ["Tìm thông tin về các trường THPT tại địa phương để quyết định lựa chọn nguyện vọng đăng kí", "Tìm trò chơi giải trí", "Tìm thông tin du lịch", "Tìm thông tin mua sắm"]}, {"bai": "Bài 3", "q": "Vì sao cần lưu trữ tóm tắt (nội dung tóm tắt, địa chỉ trang web) của thông tin tìm được vào một tệp?", "opts": ["Để sử dụng trong việc đánh giá ở bước tiếp theo", "Để xoá đi sau đó", "Để gửi cho người lạ", "Để không phải đọc lại"]}, {"bai": "Bài 3", "q": "Công cụ hội thoại thông minh là gì?", "opts": ["Công cụ tương tác giữa người với máy tính có ứng dụng trí tuệ nhân tạo", "Một loại bàn phím", "Một trang báo giấy", "Một máy in"]}, {"bai": "Bài 3", "q": "Thứ tự ưu tiên giữa các tiêu chí lựa chọn giúp gì?", "opts": ["Xác định danh sách các trường được chọn một cách thuận lợi hơn", "Làm việc chọn trường khó hơn", "Không có tác dụng", "Thay thế việc tìm kiếm thông tin"]}, {"bai": "Bài 3", "q": "Thông tin về các hoạt động giáo dục và ngoại khoá nên tìm ở đâu?", "opts": ["Website của nhà trường", "Website bán hàng", "Diễn đàn trò chơi", "Trang quảng cáo"]}, {"bai": "Bài 3", "q": "Thông tin về tuyển sinh vào lớp 10 cần tìm ở đâu?", "opts": ["Website của Sở Giáo dục và Đào tạo", "Diễn đàn trò chơi", "Trang bán hàng", "Mạng xã hội của người lạ"]}, {"bai": "Bài 3", "q": "Nhận định nào đúng về thông tin trên website của Sở Giáo dục và Đào tạo hoặc của các trường?", "opts": ["Không phải mọi thông tin đều tìm được trên đó; thông tin cần được đối chiếu, kiểm chứng trước khi sử dụng", "Mọi thông tin đều có ở đó", "Không cần kiểm chứng bất kì thông tin nào", "Chỉ có thông tin quảng cáo"]}, {"bai": "Bài 3", "q": "Để kiểm tra thông tin có chính xác không, em làm thế nào?", "opts": ["Đối chiếu thông tin từ những nguồn khác nhau", "Tin ngay nguồn đầu tiên", "Chọn thông tin có nhiều lượt thích", "Chọn bài viết dài nhất"]}, {"bai": "Bài 3", "q": "Khi kiểm tra tính sử dụng được của thông tin, em cần tránh điều gì?", "opts": ["Tập trung vào những thông tin chỉ nhằm thu hút sự chú ý mà không liên quan đến mục đích tìm kiếm", "Đọc tiêu đề bài viết", "Đọc nội dung bài viết", "So sánh với yêu cầu chọn trường"]}, {"bai": "Bài 4", "q": "Giả mạo ngân hàng, cơ quan nhà nước, người thân… gọi điện dưới dạng trúng thưởng, từ thiện để chiếm đoạt tài sản là hành vi gì?", "opts": ["Lừa đảo qua mạng", "Bắt nạt qua mạng", "Ứng xử thiếu văn hoá", "Gửi thư rác"]}, {"bai": "Bài 4", "q": "Hành vi nào sau đây khi hoạt động trong môi trường số KHÔNG vi phạm pháp luật, trái đạo đức, thiếu văn hoá?", "opts": ["Chia sẻ thông tin về lớp học ngôn ngữ lập trình trực tuyến", "Đăng bài hoặc bình luận gây mâu thuẫn vùng miền", "Quảng cáo bán hàng hoá, dịch vụ bị cấm", "Sử dụng trái phép tài khoản mạng của tổ chức, cá nhân khác"]}, {"bai": "Bài 4", "q": "Gửi tin nhắn quảng cáo nhiều lần mà người nhận đã phản ứng không muốn nhận thì trở thành hành vi gì?", "opts": ["Quấy nhiễu", "Hành vi tốt", "Hành vi bắt buộc", "Chia sẻ thông tin"]}, {"bai": "Bài 4", "q": "Năm 2013, Chính phủ ban hành văn bản nào quy định chi tiết việc quản lí, cung cấp, sử dụng dịch vụ Internet và thông tin trên mạng?", "opts": ["Nghị định số 72/2013/NĐ-CP", "Luật An ninh mạng", "Luật Công nghệ thông tin", "Luật Giáo dục"]}, {"bai": "Bài 4", "q": "Những thiết bị số nhanh chóng lỗi thời, bị thải ra nhiều sẽ gây ra hậu quả gì?", "opts": ["Tạo ra rác thải điện tử nguy hại cho môi trường", "Làm đất màu mỡ hơn", "Giúp tiết kiệm điện", "Không có hậu quả gì"]}, {"bai": "Bài 4", "q": "Đăng hình ảnh, chỉ nhà, biển số xe… của người khác mà không có sự đồng ý của họ là hành vi vi phạm gì?", "opts": ["Vi phạm quyền nhân thân, uy tín của cá nhân và tổ chức", "Không vi phạm gì", "Vi phạm an toàn giao thông", "Vi phạm luật lao động"]}, {"bai": "Bài 4", "q": "Luật Công nghệ thông tin số 67/2006/QH11 được ban hành năm nào?", "opts": ["2006", "2013", "2018", "2020"]}, {"bai": "Bài 4", "q": "Phương án nào sau đây KHÔNG phải là tác động tiêu cực của công nghệ kĩ thuật số đến đời sống con người?", "opts": ["Thường xuyên sử dụng phần mềm soạn thảo văn bản để làm báo cáo", "Nhờ trí tuệ nhân tạo làm bài tập về nhà", "Truy cập mạng xã hội trong nhiều giờ", "Vừa ăn vừa xem video trên trang YouTube"]}, {"bai": "Bài 4", "q": "Làm phát tán virus máy tính thông qua truy cập các liên kết lừa đảo nhận thưởng là hành vi vi phạm gì?", "opts": ["Vi phạm đến việc bảo đảm an toàn thông tin trên không gian mạng", "Vi phạm quyền sở hữu trí tuệ", "Hành vi tuyên truyền, quảng cáo", "Không vi phạm"]}, {"bai": "Bài 4", "q": "Luật An ninh mạng quy định về điều gì?", "opts": ["Hoạt động bảo vệ an ninh quốc gia và bảo đảm trật tự, an toàn xã hội trên không gian mạng", "Giá bán máy tính", "Cách chơi trò chơi điện tử", "Giờ mở cửa của quán Internet"]}, {"bai": "Bài 4", "q": "Khi hoạt động trong môi trường số, sử dụng các dịch vụ Internet, người sử dụng cần:", "opts": ["Có trách nhiệm, ứng xử lành mạnh, có văn hoá và không vi phạm pháp luật", "Tự do làm mọi điều mình thích", "Chia sẻ mọi thông tin nhận được", "Dùng phần mềm không có bản quyền"]}, {"bai": "Bài 4", "q": "Không xem xét kĩ mà đã chia sẻ, phát tán thông tin chưa kiểm chứng, bình luận sai trái là đã vô tình làm gì?", "opts": ["Tiếp tay cho kẻ xấu phát tán thông tin vi phạm pháp luật", "Giúp đỡ mọi người", "Bảo vệ an ninh mạng", "Học tập tích cực"]}, {"bai": "Bài 5", "q": "Phần mềm mô phỏng thể hiện điều gì?", "opts": ["Thể hiện trực quan sự vận động của một đối tượng, cho phép người dùng tương tác và tìm hiểu cách thức hoạt động của đối tượng đó", "Chỉ hiển thị hình ảnh tĩnh", "Chỉ lưu trữ dữ liệu", "Chỉ phát âm thanh"]}, {"bai": "Bài 5", "q": "Phần mềm Flowgorithm cho phép em làm gì?", "opts": ["Chạy thử thuật toán dạng sơ đồ khối trước khi cài đặt trong một ngôn ngữ lập trình", "Pha màu", "Vẽ bản đồ", "Mô phỏng thí nghiệm hoá học"]}, {"bai": "Bài 5", "q": "Phần mềm mô phỏng pha màu cho phép em làm gì?", "opts": ["Chọn màu, tăng giảm tỉ lệ các màu và nhìn thấy màu kết quả trên màn hình", "In màu ra giấy", "Mua màu vẽ trực tuyến", "Vẽ tranh tự động"]}, {"bai": "Bài 5", "q": "Theo An, để tập pha màu mà tiết kiệm được thời gian và màu vẽ, Minh nên làm gì?", "opts": ["Sử dụng phần mềm mô phỏng trước khi thực hành pha màu", "Mua thật nhiều màu vẽ", "Bỏ không pha màu nữa", "Nhờ người khác pha hộ"]}, {"bai": "Bài 5", "q": "Ngoài học tập, phần mềm mô phỏng còn được sử dụng ở đâu?", "opts": ["Trong nhiều lĩnh vực khác", "Chỉ trong trường học", "Chỉ trong trò chơi", "Không dùng ở đâu khác"]}, {"bai": "Bài 5", "q": "Trang web nào được SGK giới thiệu là phần mềm mô phỏng pha màu?", "opts": ["https://trycolors.com", "https://phet.colorado.edu", "https://www.traffic-simulation.de", "https://physics.weber.edu"]}, {"bai": "Bài 5", "q": "So với nghiên cứu trực tiếp trong thực tế, phần mềm mô phỏng hỗ trợ nghiên cứu đối tượng như thế nào?", "opts": ["Toàn diện, sinh động và an toàn với chi phí thấp hơn", "Tốn kém hơn", "Nguy hiểm hơn", "Kém sinh động hơn"]}, {"bai": "Bài 5", "q": "Trang https://physics.weber.edu/schroeder/md dùng để nghiên cứu gì?", "opts": ["Chuyển động và tương tác giữa các phân tử trong những điều kiện khác nhau", "Giao thông thành phố", "Pha màu", "Vẽ hình học"]}, {"bai": "Bài 5", "q": "Khi sử dụng phần mềm mô phỏng, em cần lưu ý điều gì?", "opts": ["Sử dụng phần mềm có chất lượng cao và không vi phạm bản quyền", "Dùng bất kì phần mềm nào tìm thấy", "Không cần quan tâm bản quyền", "Chỉ dùng phần mềm có nhiều quảng cáo"]}, {"bai": "Bài 6", "q": "Hình 6.5b minh hoạ điều gì có thể xảy ra khi lắp ampe kế không đúng cách?", "opts": ["Sự cố: cháy nguồn điện", "Đèn sáng hơn", "Mạch hoạt động bình thường", "Ampe kế chỉ 0"]}, {"bai": "Bài 6", "q": "Khai thác phần mềm mô phỏng dạng thí nghiệm ảo giúp em điều gì?", "opts": ["Bổ sung kiến thức khoa học, toán học, học cách giải quyết vấn đề và phát hiện điều mới mẻ", "Chỉ để giải trí", "Thay thế hoàn toàn việc học", "Không có tác dụng"]}, {"bai": "Bài 6", "q": "Thiết bị nào sau đây là thiết bị tiêu thụ điện trong mô phỏng?", "opts": ["Bóng đèn compact", "Pin mặt trời", "Máy phát điện", "Vòi nước chảy"]}, {"bai": "Bài 6", "q": "Mô phỏng «Năng lượng: các dạng và sự chuyển hoá» nằm trong lĩnh vực nào trên trang PhET?", "opts": ["Hoá học", "Toán", "Sinh học", "Khoa học Trái đất"]}, {"bai": "Bài 6", "q": "Để mở tệp TyLeVang.gsp, em chọn File/Open hoặc nhấn tổ hợp phím nào?", "opts": ["Ctrl + O", "Ctrl + S", "Ctrl + C", "Alt + ="]}, {"bai": "Bài 6", "q": "Để đo độ dài đoạn thẳng AB đã chọn trong Geometer’s Sketchpad, em chọn lệnh nào?", "opts": ["Measure/Length", "File/Open", "Number/Calculate", "Edit/Copy"]}, {"bai": "Bài 6", "q": "Nếu một hình chữ nhật có tỉ lệ hai cạnh là tỉ lệ vàng thì sau khi cắt bỏ một hình vuông, phần còn lại là:", "opts": ["Một hình chữ nhật cũng có tỉ lệ hai cạnh là tỉ lệ vàng", "Một hình tam giác", "Một hình vuông", "Một hình tròn"]}, {"bai": "Bài 6", "q": "Kích thước ngôi sao năm cánh được điều chỉnh bằng cách nào?", "opts": ["Kéo thả điểm P hoặc điểm Q để độ dài đoạn PQ thay đổi", "Gõ số vào bàn phím", "Nhấn phím Delete", "Đổi màu ngôi sao"]}, {"bai": "Bài 7", "q": "Khi cộng tác theo thời gian thực, việc nào là rất cần thiết?", "opts": ["Mở một kênh hội thoại để các thành viên trao đổi trong quá trình hoàn thiện sản phẩm", "Tắt máy khi người khác đang sửa", "Chỉ một người được sửa", "Không trao đổi với nhau"]}, {"bai": "Bài 7", "q": "Cách chia sẻ nào giúp mỗi thành viên có thể chủ động chỉnh sửa theo thời gian phù hợp với mình?", "opts": ["Chia sẻ để các thành viên khác chủ động cập nhật", "Trình bày trực tiếp", "Chia sẻ chỉ để xem", "In ra giấy"]}, {"bai": "Bài 7", "q": "«Đảm bảo chất lượng dữ liệu» khi dùng công cụ trực quan nghĩa là gì?", "opts": ["Xem được từ khoảng cách xa, hình ảnh sắc nét, bố cục hợp lí", "Ảnh càng nhỏ càng tốt", "Chữ càng nhỏ càng tốt", "Không cần bố cục"]}, {"bai": "Bài 7", "q": "Nếu trình bày tiến trình lịch sử thì công cụ trực quan nào sẽ phát huy hiệu quả?", "opts": ["Sơ đồ dòng thời gian", "Biểu đồ hình quạt tròn", "Bảng tính", "Ảnh chụp màn hình"]}, {"bai": "Bài 7", "q": "Khi chia sẻ để người khác xem, sơ đồ tư duy nên được trình bày như thế nào?", "opts": ["Trong một trang và có thể đính kèm tệp văn bản, hình ảnh, video, trang tính", "Trên nhiều trang rời nhau", "Chỉ có chữ, không có hình", "Càng nhiều nhánh càng tốt"]}, {"bai": "Bài 7", "q": "Nhóm ba bạn An, Minh, Khoa lựa chọn sản phẩm nào để tham gia triển lãm?", "opts": ["Bài trình bày về nội dung Lược sử công cụ tính toán", "Sổ lưu niệm của lớp", "Bộ sưu tập ảnh CLB Tin học", "Trò chơi bằng ngôn ngữ lập trình trực quan"]}, {"bai": "Bài 7", "q": "Khi không có điều kiện trình bày trực tiếp, em có thể làm gì?", "opts": ["Chia sẻ sơ đồ tư duy hoặc bài trình chiếu để các thành viên khác xem", "Huỷ bỏ việc trao đổi", "Chỉ gửi tin nhắn ngắn", "Không cần chia sẻ"]}, {"bai": "Bài 7", "q": "Sử dụng công cụ trực quan theo nguyên tắc nào?", "opts": ["Đơn giản và rõ ràng, chọn loại công cụ minh hoạ tốt nhất để truyền tải thông điệp", "Phức tạp và nhiều chi tiết", "Chọn ngẫu nhiên", "Càng nhiều công cụ càng tốt"]}, {"bai": "Bài 8", "q": "Sau khi chọn tệp cần chèn trong hộp thoại mở tệp, em nháy chuột chọn nút nào?", "opts": ["Open", "Cancel", "Delete", "Close"]}, {"bai": "Bài 8", "q": "Bài trình chiếu ở Nhiệm vụ 3 được lưu với tên nào?", "opts": ["LuocSuMayTinh", "LuocSu.emm", "KinhPhi.xlsx", "TrienLam.docx"]}, {"bai": "Bài 8", "q": "Nhiệm vụ 3 yêu cầu tạo bài trình chiếu chủ đề gì?", "opts": ["Lược sử công cụ tính toán", "Năng lượng tái tạo", "Chọn trường THPT", "Tỉ lệ vàng"]}, {"bai": "Bài 8", "q": "Theo sơ đồ dòng thời gian Hình 8.6, máy tính điện tử thế hệ thứ tư (1974 – 1990) được minh hoạ bằng máy nào?", "opts": ["Máy vi tính Micral", "ENIAC", "IBM 7090", "Iphone"]}, {"bai": "Bài 8", "q": "Theo sơ đồ dòng thời gian Hình 8.6, máy tính điện tử thế hệ thứ nhất (1945 – 1955) được minh hoạ bằng máy nào?", "opts": ["ENIAC", "IBM 7090", "IBM System/360", "Máy vi tính Micral"]}, {"bai": "Bài 8", "q": "Sau khi nhập đường liên kết trong hộp thoại Hyperlink, em chọn nút nào để hoàn thành?", "opts": ["OK", "Cancel", "Remove link", "Defaults..."]}, {"bai": "Bài 8", "q": "Để tạo sơ đồ dòng thời gian về Lược sử công cụ tính toán, em làm thế nào?", "opts": ["Sử dụng mẫu có sẵn (tìm trên Internet hoặc giáo viên cung cấp)", "Vẽ tay rồi chụp ảnh", "Gõ thành đoạn văn dài", "Dùng bảng tính"]}, {"bai": "Bài 8", "q": "Trong hộp thoại Hyperlink, em sao chép đường liên kết đến video vào ô nào?", "opts": ["Link to:", "Topic / Label:", "File name:", "Search"]}, {"bai": "Bài 8", "q": "Để đính kèm tệp vào nhánh của sơ đồ tư duy, em chọn lệnh nào?", "opts": ["Insert/Attachment/Attachment", "Insert/Hyperlink", "File/Save", "Home/Copy"]}, {"bai": "Bài 8", "q": "Trong Nhiệm vụ 2, ai trình bày nội dung chuẩn bị về «Lược sử công cụ tính toán»?", "opts": ["Một thành viên đóng vai trò trưởng nhóm", "Giáo viên", "Tất cả cùng nói một lúc", "Không ai trình bày"]}], "tf": [{"bai": "Bài 1", "q": "Bài 1 – Thế giới kĩ thuật số: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Trong lĩnh vực giao thông, máy tính được sử dụng để làm gì? → Điều khiển xe tự động lái, điều khiển hệ thống đèn tín hiệu", true], ["Bộ phận nào được gọi là «bộ não» của máy tính? → Loa", false, "Đúng là: Bộ xử lí"], ["Máy tính có thể lưu trữ và xử lí những loại dữ liệu nào? → Chỉ hình ảnh", false, "Đúng là: Văn bản, hình ảnh, âm thanh, video…"], ["Siêu máy tính có thể được sử dụng để làm gì? → Thực hiện những tính toán phức tạp trong hoá học, vật lí, công nghệ kết cấu hay dự báo thời tiết", true]]}, {"bai": "Bài 2", "q": "Bài 2 – Thông tin trong giải quyết vấn đề: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Nếu thông tin đã lỗi thời, cũ hoặc chậm trễ, khi chọn trường em có thể gặp điều gì? → Chọn được trường tốt hơn", false, "Đúng là: Chọn nhầm trường hoặc bỏ lỡ cơ hội vì không biết những thay đổi"], ["Vì sao em cần quan tâm đến chất lượng thông tin khi tìm kiếm, tiếp nhận và trao đổi thông tin? → Để có thể đưa ra các quyết định đúng đắn", true], ["Thông tin về trường thiếu chi tiết về học phí, môi trường học tập hoặc độ uy tín là vi phạm tiêu chí nào? → Tính đầy đủ", true], ["Khi mục tiêu là chọn một trường THPT công lập, thông tin về du học nước ngoài vi phạm tiêu chí nào? → Tính mới", false, "Đúng là: Tính sử dụng được"]]}, {"bai": "Bài 3", "q": "Bài 3 – Thực hành: đánh giá chất lượng thông tin: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Công cụ hội thoại thông minh giúp gì cho việc tìm kiếm? → Đảm bảo mọi thông tin đều đúng", false, "Đúng là: Khoanh vùng phạm vi tìm kiếm với những yêu cầu cụ thể"], ["Nhiệm vụ 2 yêu cầu đưa ra danh sách lựa chọn nguyện vọng gồm mấy trường? → Mười trường", false, "Đúng là: Ba trường theo thứ tự ưu tiên"], ["Nhiệm vụ 1 của bài thực hành có những yêu cầu nào? → Xác định mục đích, yêu cầu tìm kiếm và thực hiện tìm kiếm", true], ["Trang web các Sở Giáo dục và Đào tạo thường có dạng nào? → edu.vn", true]]}, {"bai": "Bài 4", "q": "Bài 4 – Một số vấn đề pháp lí về sử dụng dịch vụ internet: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Luật An ninh mạng được Quốc hội ban hành năm nào? → 2013", false, "Đúng là: 2018"], ["Vì sao thông tin cá nhân có thể bị rò rỉ và sử dụng bất hợp pháp? → Vì dữ liệu số bị đánh cắp dễ dàng hơn, quy mô lớn hơn", true], ["Một bạn mới quen trên mạng gửi liên kết lạ, yêu cầu chia sẻ cho 5 bạn để nhận quà là chiếc ba lô. Minh nên làm gì? → Không làm theo, vì có thể là liên kết lừa đảo, phát tán virus", true], ["Công nghệ phát triển, tự động hoá ứng dụng nhiều có thể dẫn đến điều gì đối với xã hội? → Mọi người đều có việc làm", false, "Đúng là: Nguy cơ thất nghiệp tăng, bộ phận người dân yếu thế ngày càng tụt hậu"]]}, {"bai": "Bài 5", "q": "Bài 5 – Tìm hiểu phần mềm mô phỏng: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Phần mềm Crocodile Physics hay phần mềm trực tuyến https://phet.colorado.edu mô phỏng gì? → Hình học", false, "Đúng là: Nhiều thí nghiệm vật lí"], ["Trang https://www.traffic-simulation.de dùng để nghiên cứu gì? → Xây dựng giải pháp giao thông nhằm giảm bớt tắc nghẽn trong các thành phố", true], ["Khi pha màu trong thực tế, việc bổ sung nhiều màu có thể dẫn đến điều gì? → Hỗn hợp màu xỉn đục và không dùng được nữa", true], ["Phần mềm mô phỏng là gì? → Phần mềm soạn thảo văn bản", false, "Đúng là: Phương tiện giúp em quan sát và hình dung ra những hiện tượng khó hoặc không thể trải nghiệm trong thực tế"]]}, {"bai": "Bài 6", "q": "Bài 6 – Thực hành: khai thác phần mềm mô phỏng: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Khi thay đổi kích thước ngôi sao, tỉ lệ AB/BC, AC/AB, AD/AC như thế nào? → Luôn bằng 1", false, "Đúng là: Không thay đổi, luôn bằng nhau và xấp xỉ 1,62"], ["Để vào phòng thí nghiệm ảo lắp ráp mạch điện, em chọn mô phỏng nào? → Bộ lắp ráp mạch điện: DC – Phòng thí nghiệm ảo", true], ["Nhiệm vụ 3 sử dụng phần mềm nào để minh hoạ? → Microsoft Excel", false, "Đúng là: Geometer’s Sketchpad"], ["Ampe kế cần được mắc như thế nào với đoạn mạch điện cần đo? → Mắc nối tiếp, không mắc trực tiếp vào hai cực của nguồn điện", true]]}, {"bai": "Bài 7", "q": "Bài 7 – Trình bày thông tin trong trao đổi và hợp tác: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Trong sơ đồ tư duy Hình 7.1, nhánh «Dự kiến thu chi» được đính kèm loại dữ liệu nào? → Bảng tính", true], ["Trong sơ đồ tư duy Hình 7.1, nhánh về Charles Babbage được đính kèm những gì? → Liên kết đến video giới thiệu dự án và văn bản tiểu sử của Babbage", true], ["Cách nào là cách dễ dàng nhất để cộng tác khi sử dụng sơ đồ tư duy hoặc bài trình chiếu? → Chia sẻ để các thành viên khác xem", false, "Đúng là: Trình bày trực tiếp"], ["Để sơ đồ tư duy hay bài trình chiếu hỗ trợ hiệu quả cho nhóm, ngoài vấn đề kĩ thuật cần điều gì? → Mua phần mềm đắt tiền", false, "Đúng là: Được hướng dẫn về cách làm việc hợp tác"]]}, {"bai": "Bài 8", "q": "Bài 8 – Thực hành: sử dụng công cụ trực quan trình bày thông tin trong trao đổi và hợp tác: mỗi ý sau (câu hỏi → câu trả lời) đúng hay sai?", "y": [["Nhiệm vụ 2 «Trình bày sơ đồ tư duy» có yêu cầu gì? → Trình bày sơ đồ tư duy trước nhóm để các thành viên trao đổi, bổ sung nội dung", true], ["Theo Hình 8.1, tổng chi phí cho phần nội dung «Lược sử công cụ tính toán» là bao nhiêu? → 8.000 đồng", false, "Đúng là: 122.000 đồng"], ["Trang dàn ý của bài trình chiếu (Hình 8.5) gồm mục nào sau đây? → Dòng thời gian lược sử công cụ tính toán", true], ["Để chèn video minh hoạ đã chuẩn bị vào trang chiếu, em chọn lệnh nào? → Home/Paste", false, "Đúng là: Insert, chọn Video/Insert Video from This Device"]]}], "th": [{"bai": "Bài 1", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Công nghệ thông tin giúp con người giảm bớt sự phụ thuộc vào điều gì khi giao tiếp?", "Không gian và thời gian"], ["Điều gì quyết định tác động của công nghệ thông tin có lợi hay có hại cho xã hội?", "Cách chúng ta sử dụng công nghệ thông tin"], ["Bộ xử lí làm việc với dữ liệu được biểu diễn dưới dạng gì?", "Dãy bit"], ["Máy tính có thể thực hiện hàng tỉ phép tính trong khoảng thời gian bao lâu?", "Một giây"]]}, {"bai": "Bài 1", "t": "cat", "q": "Những thiết bị nào có thể được gắn bộ xử lí để có thêm nhiều tính năng? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Ti vi, tủ lạnh, máy giặt", 0], ["Bếp điện, nồi cơm điện", 0], ["Đèn, quạt", 0], ["Cái bàn gỗ", 1]]}, {"bai": "Bài 2", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Điều gì làm cho thông tin trở thành hữu ích?", "Chất lượng của thông tin"], ["Tiêu chí nào thể hiện sự bao quát nhiều khía cạnh, cho em cái nhìn tổng thể về vấn đề?", "Tính đầy đủ"], ["Tiêu chí nào cho biết thông tin đã bị lỗi thời chưa?", "Tính mới (tính cập nhật)"], ["Thông tin có vai trò gì trong việc giải quyết vấn đề?", "Là cơ sở để đưa ra các quyết định"]]}, {"bai": "Bài 2", "t": "cat", "q": "Để chọn trường THPT, An nên dùng thông tin từ những nguồn đáng tin cậy nào? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Trang web của Sở Giáo dục và Đào tạo", 0], ["Ý kiến giáo viên chủ nhiệm", 0], ["Ý kiến người thân có kinh nghiệm", 0], ["Quảng cáo không rõ nguồn trên mạng", 1]]}, {"bai": "Bài 3", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Yêu cầu tìm kiếm về điểm chuẩn và chỉ tiêu tuyển sinh được giới hạn trong khoảng thời gian nào?", "Ba năm gần nhất"], ["Từ khoá tìm kiếm nên được xác định dựa vào đâu?", "Dựa vào yêu cầu tìm kiếm"], ["Khi lựa chọn các trường phù hợp với năng lực và sở thích, em cần lưu ý điều gì?", "Tính khả thi của phương án được chọn"], ["Nếu thiếu bất kì thông tin nào như điểm chuẩn, học phí, khoảng cách… thì điều gì có thể xảy ra?", "Lựa chọn của em có thể không thực hiện được"]]}, {"bai": "Bài 3", "t": "cat", "q": "Những yêu cầu tìm kiếm có thể là gì? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Điểm chuẩn và chỉ tiêu tuyển sinh của trường trong ba năm gần nhất", 0], ["Những nhóm môn học mà trường có thế mạnh", 0], ["Các hoạt động ngoại khoá của trường", 0], ["Khoảng cách từ nhà đến trường", 0]]}, {"bai": "Bài 4", "t": "cat", "q": "Những phương án nào nói về tác động tiêu cực của công nghệ kĩ thuật số tới đời sống con người và xã hội? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Quyền riêng tư dễ bị ảnh hưởng", 0], ["Dữ liệu tài khoản ngân hàng bị đánh cắp", 0], ["Ô nhiễm do rác thải từ những thiết bị công nghệ số lỗi thời", 0], ["Giao dịch trong thương mại tăng nhanh nhờ ứng dụng ngân hàng số", 1]]}, {"bai": "Bài 5", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Phần mềm Crocodile Chemistry hay ChemLab mô phỏng gì?", "Thí nghiệm hoá học"], ["Hình 5.2 minh hoạ thí nghiệm ảo nào trên trang phet.colorado.edu?", "Lắp ráp mạch điện đơn giản"], ["Để tìm phần mềm pha màu trên Internet, SGK gợi ý dùng từ khoá nào?", "mixing colors simulator"], ["Phần mềm mô phỏng pha màu giúp em học cách tạo ra màu mới mà vẫn tiết kiệm được gì?", "Thời gian và vật liệu"]]}, {"bai": "Bài 5", "t": "cat", "q": "Những hệ màu cơ bản nào được nhắc đến trong bài? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["RGB (đỏ, lục, lam)", 0], ["CMYK (xanh lơ, hồng sẫm, vàng, đen)", 0], ["RYB (đỏ, vàng, lam)", 0], ["ABC (trắng, xám, nâu)", 1]]}, {"bai": "Bài 6", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Để mở trang PhET, em nhập địa chỉ nào vào thanh địa chỉ trình duyệt?", "https://phet.colorado.edu/"], ["Phần mềm mô phỏng trình bày các hiện tượng khoa học bằng cách nào?", "Sử dụng hình ảnh động hay ba chiều"], ["Tỉ lệ (1 + √5)/2 ≈ 1,618034 có tính chất đặc biệt, được gọi là gì?", "Tỉ lệ vàng"], ["Để mở công cụ tính trong Geometer’s Sketchpad, em gõ tổ hợp phím nào?", "Alt + ="]]}, {"bai": "Bài 6", "t": "cat", "q": "Trong mô phỏng chuyển hoá năng lượng, em có thể chọn những nguồn năng lượng nào? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Người đạp xe", 0], ["Ánh sáng mặt trời", 0], ["Vòi nước chảy", 0], ["Ấm nước sôi", 0]]}, {"bai": "Bài 7", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Sơ đồ tư duy và bài trình chiếu là những công cụ giúp làm gì?", "Trình bày thông tin trong trao đổi và hợp tác"], ["Để tổng kết chặng đường học tập môn Tin học, các bạn lớp 9A quyết định tổ chức hoạt động gì?", "Triển lãm tin học"], ["Trong sơ đồ tư duy Hình 7.1, máy tính cơ học quay tay Pascaline do ai tạo ra năm 1642?", "Blaise Pascal"], ["Đính kèm tệp văn bản, hình ảnh, video, trang tính vào sơ đồ tư duy giúp gì?", "Trình bày thông tin đầy đủ và hiệu quả"]]}, {"bai": "Bài 7", "t": "cat", "q": "Những công cụ nào được nhắc đến để hỗ trợ thực hiện hoạt động cộng tác? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Sơ đồ tư duy", 0], ["Bài trình chiếu", 0], ["Máy tính bỏ túi", 1], ["Bàn tính", 1]]}, {"bai": "Bài 8", "t": "match", "q": "Nối mỗi câu hỏi với đáp án đúng.", "p": [["Tệp CharlesBabbage.docx chứa nội dung gì?", "Tiểu sử nhà khoa học Charles Babbage"], ["Tệp sơ đồ tư duy được lưu với tên nào?", "LuocSu.emm"], ["Tệp bảng tính KinhPhi.xlsx dùng để làm gì?", "Tính toán chi phí triển lãm"], ["Nhiệm vụ 1 hướng dẫn sử dụng phần mềm nào để tạo sơ đồ tư duy?", "MindMaple Lite"]]}, {"bai": "Bài 8", "t": "cat", "q": "Các bước hướng dẫn ở Nhiệm vụ 2 gồm những việc nào? Xếp mỗi ý vào cột phù hợp.", "cats": ["Đúng", "Không đúng"], "items": [["Lựa chọn một cách sử dụng sơ đồ tư duy để trình bày thông tin", 0], ["Trao đổi, thảo luận để bổ sung thêm nội dung cần chuẩn bị", 0], ["Phân công công việc để các thành viên tiếp tục hoàn thành nội dung", 0], ["Xoá sơ đồ tư duy sau khi trình bày", 1]]}], "tl": [{"bai": "Bài 1", "t": "dien", "q": "Điền câu trả lời ngắn (không cần dấu, không phân biệt hoa thường).", "o": [{"n": "Máy tính kết nối với nhau tạo thành mạng máy tính toàn cầu gọi là gì?", "a": ["Internet", "internet"]}]}, {"bai": "Bài 1", "t": "mo", "q": "Những ví dụ nào cho thấy thiết bị có gắn bộ xử lí xuất hiện trong mọi lĩnh vực của đời sống? Em hãy viết các ý đúng.", "y": ["Hệ thống nhận dạng khuôn mặt", "Máy rút tiền tự động (ATM)", "Hệ thống thu phí tự động trên đường cao tốc"]}, {"bai": "Bài 2", "t": "mo", "q": "Chất lượng thông tin được đánh giá qua những tiêu chí nào? Em hãy viết các ý đúng.", "y": ["Tính mới", "Tính chính xác", "Tính đầy đủ", "Tính sử dụng được"]}, {"bai": "Bài 4", "t": "mo", "q": "Công nghệ kĩ thuật số có thể tác động tiêu cực đến sức khoẻ thể chất và tinh thần con người như thế nào? Em hãy viết các ý đúng.", "y": ["Gây nghiện Internet", "Ít giao tiếp", "Mất ngủ"]}, {"bai": "Bài 5", "t": "mo", "q": "Những phần mềm nào giúp em vẽ các hình hình học và giải toán? Em hãy viết các ý đúng.", "y": ["GeoGebra", "Cabri 3D", "Geometer’s Sketchpad"]}, {"bai": "Bài 6", "t": "dien", "q": "Điền câu trả lời ngắn (không cần dấu, không phân biệt hoa thường).", "o": [{"n": "Em cần dùng thiết bị nào để đo cường độ dòng điện trên mạch điện?", "a": ["Ampe kế", "ampe kế", "ampe ke"]}]}, {"bai": "Bài 6", "t": "mo", "q": "Những thiết bị nào chuyển hoá năng lượng thành điện năng trong mô phỏng? Em hãy viết các ý đúng.", "y": ["Pin mặt trời", "Máy phát điện"]}, {"bai": "Bài 7", "t": "mo", "q": "Em có thể sử dụng bài trình chiếu và sơ đồ tư duy trong trao đổi thông tin và hợp tác theo những cách nào? Em hãy viết các ý đúng.", "y": ["Trình bày trực tiếp", "Chia sẻ để các thành viên khác xem độc lập", "Chia sẻ để các thành viên cập nhật độc lập", "Chia sẻ để cộng tác theo thời gian thực"]}, {"bai": "Bài 8", "t": "dien", "q": "Điền câu trả lời ngắn (không cần dấu, không phân biệt hoa thường).", "o": [{"n": "Để đính kèm đường liên kết đến video, em chọn lệnh nào?", "a": ["Insert/Hyperlink", "insert/hyperlink"]}]}], "khoi": "9", "mon": "tin9", "gui_url": "https://script.google.com/macros/s/AKfycbwp5pbI0W4vDrLZbUaOSuNpdTeh5cuZptVkSuIq_VWhjhswSVryoQajxYGjhHOZ2tqQ/exec"};
+const VONG = [
+  {k:"mc", ten:"Vòng 1 · Rung chuông vàng", mo:"Trắc nghiệm nhiều lựa chọn, có tính giờ", icon:"🔔"},
+  {k:"tf", ten:"Vòng 2 · Đúng hay Sai", mo:"Mỗi câu 4 ý a, b, c, d như đề kiểm tra", icon:"✅"},
+  {k:"th", ten:"Vòng 3 · Thực hành", mo:"Ghép đôi, phân loại, sắp xếp thứ tự", icon:"🧩"},
+  {k:"tl", ten:"Vòng 4 · Tự luận ngắn", mo:"Điền kết quả, viết câu trả lời", icon:"✍️"}
+];
+const LOGKEY = "ontap_log_" + BAI.id, QKEY = "ontap_queue_" + BAI.id;
+const $ = s => document.querySelector(s), app = $("#app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const shuf = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/[\s.,;:!?'"()]/g, "");
+const lsGet = (k, d) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch (e) { return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} };
+
+$("#hTitle").textContent = BAI.ten;
+$("#hSub").textContent = BAI.phamvi;
+addEventListener("online", () => flush());
+
+/* ---------- trạng thái ---------- */
+let S = null; // lượt chơi hiện tại
+const qs = new URLSearchParams(location.search);
+
+/* chọn câu: chia đều theo bài để lượt nào cũng phủ đủ nội dung */
+function pick(list, n) {
+  if (!n || n >= list.length) return shuf(list);
+  const by = {}; list.forEach(x => (by[x.bai || "_"] = by[x.bai || "_"] || []).push(x));
+  const keys = Object.keys(by).map(k => (by[k] = shuf(by[k]), k));
+  const out = []; let i = 0;
+  while (out.length < n) { const k = keys[i % keys.length]; if (by[k].length) out.push(by[k].shift()); i++; if (i > n * 20) break; }
+  return shuf(out);
+}
+
+/* ---------- màn mở đầu ---------- */
+function home() {
+  stopTimer();
+  $("#teamBar").classList.add("hide");
+  const tong = BAI.mc.length + BAI.tf.length + BAI.th.length + BAI.tl.length;
+  app.innerHTML = `
+  <div class="card">
+        <h2 style="margin:0 0 10px">Chọn vòng chơi</h2>
+    <div class="grid2" id="vongs">${VONG.map((v, i) => `<div class="vong on" data-i="${i}"><b>${v.icon} ${v.ten}</b>${v.mo}</div>`).join("")}</div>
+    <div class="row" style="margin-top:14px">
+      <label><input type="radio" name="sl" value="luot" checked> Một lượt</label>
+      <label><input type="radio" name="sl" value="het"> Ôn hết ngân hàng</label>
+    </div>
+    <div class="grid2" style="margin-top:14px">
+      <div><label>Mã học sinh</label><input type="text" id="ma" autocomplete="off" value="${esc(window.ARENA_SID || qs.get("ma") || qs.get("sid") || "")}"><div class="fb bad hide" id="maLoi" style="margin-top:6px;padding:8px 10px;font-size:15px"></div></div>
+      <div><label>Thi đội <span style="font-weight:400;color:var(--mute)">(không bắt buộc)</span></label><input type="text" id="doi"></div>
+    </div>
+    <div class="row" style="margin-top:16px"><button class="btn acc" id="go">▶ Bắt đầu</button></div>
+  </div>`;
+  app.querySelectorAll(".vong").forEach(el => el.onclick = () => el.classList.toggle("on"));
+  $("#ma").oninput = () => { $("#maLoi").classList.add("hide"); $("#ma").style.borderColor = ""; };
+  $("#go").onclick = () => {
+    const on = [...app.querySelectorAll(".vong.on")].map(el => VONG[+el.dataset.i].k);
+    if (!on.length) { alert("Chọn ít nhất một vòng."); return; }
+    const het = app.querySelector('input[name=sl]:checked').value === "het";
+    const doi = $("#doi").value.split(",").map(s => s.trim()).filter(Boolean).slice(0, 6);
+    const ma = $("#ma").value.trim().toUpperCase().replace(/\s+/g, "");
+    if (doi.length === 1) { alert("Thi đội cần ít nhất 2 đội, cách nhau dấu phẩy (VD: Đội 1, Đội 2)."); $("#doi").focus(); return; }
+    if (doi.length < 2) {                       // chơi một mình: bắt buộc mã học sinh
+      const k = BAI.khoi || "67";
+      const re = /^[6-9]$/.test(k) ? new RegExp("^" + k + "A(\\d{1,2}|P)-\\d{2}$") : /^[6-9]A(\d{1,2}|P)-\d{2}$/;
+      if (!ma) { baoMa("Em nhập mã học sinh trước khi bắt đầu (VD " + k[0] + "A1-01)."); return; }
+      if (!re.test(ma) && /^[67]A(\d{1,2}|P)-\d{2}$/.test(ma)) { baoMa("Đây là bài ôn tập khối " + k[0] + " — mã học sinh phải bắt đầu bằng " + k[0] + "A (em nhập mã khối " + ma[0] + ")."); return; }
+      if (!re.test(ma)) { baoMa("Mã «" + ma + "» chưa đúng dạng. Mã gồm lớp, gạch ngang, số thứ tự 2 chữ số — VD " + k[0] + "A1-01, " + k[0] + "A10-05" + (k.includes("7") ? ", 7AP-03" : "") + "."); return; }
+    }
+    start(on, het, doi.length >= 2 ? "" : ma, doi);
+  };
+}
+
+function baoMa(t) { const e = $("#maLoi"); e.textContent = t; e.classList.remove("hide"); $("#ma").style.borderColor = "var(--bad)"; $("#ma").focus(); }
+function start(vongs, het, ma, doi) {
+  const list = {};
+  vongs.forEach(k => list[k] = het ? shuf(BAI[k]) : pick(BAI[k], BAI.so[k]));
+  S = { vongs, list, vi: 0, qi: 0, ma, doi: doi.length >= 2 ? doi.map(t => ({ ten: t, d: 0 })) : null, turn: 0,
+        diem: {}, toi: {}, sai: [], bat: Date.now(), het };
+  vongs.forEach(k => { S.diem[k] = 0; S.toi[k] = 0; });
+  intro();
+}
+
+function teamBar() {
+  const b = $("#teamBar");
+  if (!S.doi) { b.classList.add("hide"); return; }
+  b.classList.remove("hide");
+  b.innerHTML = S.doi.map((t, i) => `<span class="team ${i === S.turn ? "now" : ""}">${esc(t.ten)}: ${Math.round(t.d * 100) / 100}</span>`).join("");
+}
+function cong(k, dat, toi) { S.diem[k] += dat; S.toi[k] += toi; if (S.doi) S.doi[S.turn].d += dat; }
+function nextTurn() { if (S.doi) S.turn = (S.turn + 1) % S.doi.length; }
+
+function intro() {
+  stopTimer();
+  const k = S.vongs[S.vi], v = VONG.find(x => x.k === k);
+  teamBar();
+  app.innerHTML = `<div class="card" style="text-align:center"><div class="big-emoji">${v.icon}</div><h2>${v.ten}</h2><p style="font-size:18px">${v.mo} — ${S.list[k].length} câu</p><button class="btn acc" id="go">Vào vòng</button></div>`;
+  $("#go").onclick = () => { S.qi = 0; show(); };
+}
+
+function show() {
+  const k = S.vongs[S.vi], it = S.list[k][S.qi];
+  if (!it) { S.vi++; if (S.vi < S.vongs.length) intro(); else finish(); return; }
+  teamBar();
+  ({ mc: showMC, tf: showTF, th: showTH, tl: showTL })[k](it);
+}
+function head(k, it) {
+  const n = S.list[k].length, who = S.doi ? ` · Lượt: <b>${esc(S.doi[S.turn].ten)}</b>` : "";
+  return `<div class="row"><span class="prog">${VONG.find(x => x.k === k).ten} · Câu ${S.qi + 1}/${n}${who}</span><span class="grow"></span>${BAI.an_nhan ? "" : (it.bai ? `<span class="tag">${esc(it.bai)}</span>` : "") + (it.muc ? `<span class="tag">${esc(it.muc)}</span>` : "")}</div>`;
+}
+function nextBtn() { return `<div class="row" style="margin-top:14px"><button class="btn" id="nx">Câu tiếp ➜</button></div>`; }
+function bindNext() { const b = $("#nx"); b.onclick = () => { nextTurn(); S.qi++; show(); }; b.focus(); }
+
+/* ---------- đồng hồ ---------- */
+let T = null;
+function startTimer(sec, onEnd) {
+  stopTimer(); const bar = $("#tbar"), t0 = Date.now();
+  T = setInterval(() => { const r = 1 - (Date.now() - t0) / (sec * 1000); if (bar) bar.style.width = Math.max(0, r * 100) + "%"; const tx = $("#tsec"); if (tx) tx.textContent = Math.max(0, Math.ceil(r * sec)) + " giây"; if (r <= 0) { stopTimer(); onEnd(); } }, 200);
+}
+function stopTimer() { if (T) clearInterval(T); T = null; }
+
+/* ---------- AI: gợi ý trước khi chốt, giải thích sau khi chốt (chỉ khi mở trong Đấu trường và có mạng) ---------- */
+const coAI = () => !!(window.google && google.script && google.script.run) && navigator.onLine;
+const aiKhung = (id, nhan) => coAI() ? `<div class="ai" id="${id}"><button class="aib" type="button">${nhan}</button><div class="ait"></div></div>` : "";
+function ganAI(id, ham, q) {
+  const k = $("#" + id); if (!k) return;
+  const b = k.querySelector(".aib"), t = k.querySelector(".ait");
+  b.onclick = () => {
+    b.disabled = true; b.textContent = "…";
+    google.script.run.withSuccessHandler(r => { if (r && r.ok) { t.textContent = r.text; b.remove(); } else k.remove(); })
+      .withFailureHandler(() => k.remove())[ham](Object.assign({ mon: BAI.mon, baiId: BAI.id, ma: S && S.ma || "" }, q));
+  };
+}
+
+/* ---------- vòng 1: trắc nghiệm ---------- */
+function showMC(it) {
+  const opts = shuf(it.opts.map((t, i) => ({ t, ok: i === 0 })));
+  app.innerHTML = `<div class="card">${head("mc", it)}<div class="q">${esc(it.q)}</div>
+    <div class="timer"><i id="tbar"></i></div><div class="prog" id="tsec"></div>
+    <div class="opts">${opts.map((o, i) => `<button class="opt" data-i="${i}"><span class="k">${"ABCD"[i]}</span>${esc(o.t)}</button>`).join("")}</div>${aiKhung("aiH", "💡 Gợi ý")}<div id="fb"></div></div>`;
+  ganAI("aiH", "goiYOnTap", { cau: it.q, phuongAn: it.opts, dapAn: [it.opts[0]] });
+  let done = false;
+  const end = (i) => {
+    if (done) return; done = true; stopTimer();
+    const btns = app.querySelectorAll(".opt");
+    btns.forEach((b, j) => { b.disabled = true; if (opts[j].ok) b.classList.add("ok"); });
+    const ok = i != null && opts[i].ok;
+    if (i != null && !ok) btns[i].classList.add("bad");
+    cong("mc", ok ? 1 : 0, 1);
+    if (!ok) S.sai.push("TN: " + it.q.slice(0, 60));
+    const hb = $("#aiH .aib"); if (hb) $("#aiH").remove();
+    $("#fb").outerHTML = `<div class="fb ${ok ? "ok" : "bad"}">${ok ? "🎉 Chính xác!" : (i == null ? "⏰ Hết giờ! " : "Chưa đúng. ") + "Đáp án: <b>" + esc(it.opts[0]) + "</b>"}${it.gt ? `<div>${esc(it.gt)}</div>` : ""}${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}${aiKhung("aiG", "🤖 Giải thích")}</div>` + nextBtn();
+    ganAI("aiG", "giaiThichOnTap", { cau: it.q, phuongAn: it.opts, dapAn: [it.opts[0]], emChon: i != null ? opts[i].t : "" });
+    bindNext();
+  };
+  app.querySelectorAll(".opt").forEach(b => b.onclick = () => end(+b.dataset.i));
+  startTimer(it.giay || BAI.giay_mc || 25, () => end(null));
+}
+
+/* ---------- vòng 2: đúng / sai ---------- */
+function showTF(it) {
+  const ys = it.y.map((y, i) => ({ t: y[0], d: y[1], g: y[2] || "", n: "abcd"[i] }));
+  const ans = {};
+  app.innerHTML = `<div class="card">${head("tf", it)}<div class="q">${esc(it.q)}</div>
+    <div class="timer"><i id="tbar"></i></div><div class="prog" id="tsec"></div>
+    <div id="tfl">${ys.map((y, i) => `<div class="tf" data-i="${i}"><div><b>${y.n})</b> ${esc(y.t)}<div class="src gx hide"></div></div><div class="bt"><button class="btn ghost sm" data-v="1">Đúng</button><button class="btn ghost sm" data-v="0">Sai</button></div></div>`).join("")}</div>
+    ${aiKhung("aiH", "💡 Gợi ý")}<div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Chốt đáp án</button></div><div id="fb"></div></div>`;
+  const tfCau = it.q + " " + ys.map(y => y.n + ") " + y.t).join(" ; ");
+  ganAI("aiH", "goiYOnTap", { cau: tfCau, phuongAn: [], dapAn: [] });
+  app.querySelectorAll(".tf").forEach(r => r.querySelectorAll("button").forEach(b => b.onclick = () => {
+    ans[r.dataset.i] = b.dataset.v === "1"; r.querySelectorAll("button").forEach(x => x.classList.remove("sel")); b.classList.add("sel");
+  }));
+  let done = false;
+  const end = () => {
+    if (done) return; done = true; stopTimer();
+    let dung = 0;
+    app.querySelectorAll(".tf").forEach(r => {
+      const y = ys[r.dataset.i], a = ans[r.dataset.i], ok = a === y.d; if (ok) dung++;
+      r.style.background = ok ? "#e3f7ec" : "#fde8e8";
+      r.querySelectorAll("button").forEach(b => { b.disabled = true; if ((b.dataset.v === "1") === y.d) b.classList.add("ok"); });
+      const g = r.querySelector(".gx"); g.classList.remove("hide"); g.textContent = (y.d ? "Đúng" : "Sai") + (y.g ? " — " + y.g : "");
+      if (!ok) S.sai.push("ĐS: " + y.t.slice(0, 60));
+    });
+    cong("tf", dung / 4, 1);
+    $("#chk").remove();
+    if ($("#aiH .aib")) $("#aiH").remove();
+    $("#fb").outerHTML = `<div class="fb ${dung === 4 ? "ok" : "bad"}">Đúng ${dung}/4 ý.${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}${aiKhung("aiG", "🤖 Giải thích")}</div>` + nextBtn();
+    ganAI("aiG", "giaiThichOnTap", { cau: tfCau, phuongAn: [], dapAn: ys.map(y => y.n + ") " + (y.d ? "Đúng" : "Sai")) });
+    bindNext();
+  };
+  $("#chk").onclick = end;
+  startTimer(it.giay || BAI.giay_tf || 60, end);
+}
+
+/* ---------- vòng 3: thực hành ---------- */
+function showTH(it) {
+  const box = `<div class="card">${head("th", it)}<div class="q">${esc(it.q)}</div><div id="th"></div><div id="fb"></div></div>`;
+  app.innerHTML = box;
+  ({ match: thMatch, cat: thCat, sort: thSort })[it.t](it, $("#th"));
+}
+function thDone(it, dat, toi, msg) {
+  cong("th", dat / toi, 1);
+  $("#fb").outerHTML = `<div class="fb ${dat === toi ? "ok" : "bad"}">${msg}${it.gt ? `<div>${esc(it.gt)}</div>` : ""}${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}</div>` + nextBtn();
+  bindNext();
+}
+function thMatch(it, el) {
+  const L = shuf(it.p.map((p, i) => ({ t: p[0], i }))), R = shuf(it.p.map((p, i) => ({ t: p[1], i })));
+  el.innerHTML = `<p class="prog">Bấm một thẻ bên trái rồi bấm thẻ khớp bên phải.</p><div class="grid2"><div class="m-col" id="ml">${L.map(x => `<button class="chip" data-i="${x.i}">${esc(x.t)}</button>`).join("")}</div><div class="m-col" id="mr">${R.map(x => `<button class="chip" data-i="${x.i}">${esc(x.t)}</button>`).join("")}</div></div>`;
+  let pick = null, sai = new Set(), xong = 0;
+  el.querySelectorAll("#ml .chip").forEach(b => b.onclick = () => { if (b.classList.contains("done")) return; el.querySelectorAll("#ml .chip").forEach(x => x.classList.remove("pick")); b.classList.add("pick"); pick = b; });
+  el.querySelectorAll("#mr .chip").forEach(b => b.onclick = () => {
+    if (!pick || b.classList.contains("done")) return;
+    if (pick.dataset.i === b.dataset.i) { pick.classList.remove("pick"); pick.classList.add("done"); b.classList.add("done"); pick = null; xong++;
+      if (xong === it.p.length) { const d = it.p.length - sai.size; thDone(it, d, it.p.length, `Hoàn thành! Ghép đúng ngay lần đầu ${d}/${it.p.length} cặp.`); } }
+    else { sai.add(pick.dataset.i); S.sai.push("Ghép: " + it.p[pick.dataset.i][0].slice(0, 40)); [pick, b].forEach(x => { x.classList.remove("wrong"); void x.offsetWidth; x.classList.add("wrong"); }); }
+  });
+}
+function thCat(it, el) {
+  const items = shuf(it.items.map((x, i) => ({ t: x[0], c: x[1], i })));
+  const where = {};
+  el.innerHTML = `<p class="prog">Bấm một thẻ rồi bấm vào ô đúng của nó. Xếp xong bấm «Kiểm tra».</p><div class="pool" id="pool"></div>
+    <div class="cats">${it.cats.map((c, j) => `<div class="cat" data-c="${j}"><h4>${esc(c)}</h4><div class="in"></div></div>`).join("")}</div>
+    <div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Kiểm tra</button></div>`;
+  let pick = null;
+  const draw = () => {
+    $("#pool").innerHTML = items.filter(x => where[x.i] == null).map(x => `<button class="chip ${pick === x.i ? "pick" : ""}" data-i="${x.i}">${esc(x.t)}</button>`).join("") || `<span class="prog">Đã xếp hết thẻ.</span>`;
+    el.querySelectorAll(".cat").forEach(c => c.querySelector(".in").innerHTML = items.filter(x => where[x.i] === +c.dataset.c).map(x => `<button class="chip ${pick === x.i ? "pick" : ""}" data-i="${x.i}">${esc(x.t)}</button>`).join(""));
+    el.querySelectorAll(".chip").forEach(b => b.onclick = e => { e.stopPropagation(); if (lock) return; pick = +b.dataset.i; draw(); });
+  };
+  let lock = false;
+  el.querySelectorAll(".cat").forEach(c => c.onclick = () => { if (lock || pick == null) return; where[pick] = +c.dataset.c; pick = null; draw(); });
+  draw();
+  $("#chk").onclick = () => {
+    if (items.some(x => where[x.i] == null)) { alert("Còn thẻ chưa xếp."); return; }
+    lock = true; let d = 0;
+    el.querySelectorAll(".cat .chip").forEach(b => { const x = items.find(y => y.i === +b.dataset.i); const ok = x.c === where[x.i]; if (ok) d++; else { S.sai.push("Phân loại: " + x.t.slice(0, 40)); b.textContent += " → " + it.cats[x.c]; } b.classList.add(ok ? "done" : "wrong"); b.style.background = ok ? "" : "#fde8e8"; });
+    $("#chk").remove();
+    thDone(it, d, items.length, `Xếp đúng ${d}/${items.length} thẻ.`);
+  };
+}
+function thSort(it, el) {
+  let ord = shuf(it.items.map((t, i) => ({ t, i })));
+  if (ord.every((x, k) => x.i === k)) ord.reverse();
+  const draw = (lock) => {
+    el.innerHTML = `<p class="prog">Dùng nút ▲ ▼ để đưa về đúng thứ tự. Xong bấm «Kiểm tra».</p><div class="sortl">${ord.map((x, k) => `<div class="it" data-k="${k}"><b>${k + 1}.</b><span>${esc(x.t)}</span>${lock ? "" : `<button class="btn ghost sm" data-u="${k}">▲</button><button class="btn ghost sm" data-d="${k}">▼</button>`}</div>`).join("")}</div>${lock ? "" : `<div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Kiểm tra</button></div>`}`;
+    if (lock) return;
+    el.querySelectorAll("[data-u]").forEach(b => b.onclick = () => { const k = +b.dataset.u; if (k > 0) { [ord[k - 1], ord[k]] = [ord[k], ord[k - 1]]; draw(); } });
+    el.querySelectorAll("[data-d]").forEach(b => b.onclick = () => { const k = +b.dataset.d; if (k < ord.length - 1) { [ord[k + 1], ord[k]] = [ord[k], ord[k + 1]]; draw(); } });
+    $("#chk").onclick = () => {
+      draw(true); let d = 0;
+      el.querySelectorAll(".it").forEach((r, k) => { const ok = ord[k].i === k; if (ok) d++; r.classList.add(ok ? "ok" : "bad"); });
+      if (d < ord.length) S.sai.push("Sắp xếp: " + it.q.slice(0, 50));
+      thDone(it, d, ord.length, `Đúng vị trí ${d}/${ord.length}. Thứ tự đúng: ${it.items.map(esc).join(" → ")}`);
+    };
+  };
+  draw(false);
+}
+
+/* ---------- vòng 4: tự luận ---------- */
+function showTL(it) {
+  if (it.t === "mo") return showOpen(it);
+  app.innerHTML = `<div class="card">${head("tl", it)}<div class="q">${esc(it.q)}</div>
+    <div class="grid2">${it.o.map((o, i) => `<div><label>${esc(o.n)}</label><input type="text" data-i="${i}" autocomplete="off"></div>`).join("")}</div>
+    ${aiKhung("aiH", "💡 Gợi ý")}<div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Nộp câu trả lời</button></div><div id="fb"></div></div>`;
+  const tlCau = it.q + " " + it.o.map(o => o.n).join(" ; "), tlDung = it.o.map(o => o.a[0]);
+  ganAI("aiH", "goiYOnTap", { cau: tlCau, phuongAn: [], dapAn: tlDung });
+  const ins = app.querySelectorAll("input"); ins[0].focus();
+  ins.forEach(x => x.onkeydown = e => { if (e.key === "Enter") $("#chk").click(); });
+  $("#chk").onclick = () => {
+    let d = 0;
+    ins.forEach(x => { const o = it.o[+x.dataset.i], v = norm(x.value); const ok = o.a.some(a => norm(a) === v); if (ok) d++; else S.sai.push("TL: " + o.n.slice(0, 40)); x.style.borderColor = ok ? "var(--ok)" : "var(--bad)"; x.disabled = true; if (!ok) x.value += "   ✗ đáp án: " + o.a[0]; });
+    cong("tl", d / it.o.length, 1);
+    $("#chk").remove();
+    if ($("#aiH .aib")) $("#aiH").remove();
+    $("#fb").outerHTML = `<div class="fb ${d === it.o.length ? "ok" : "bad"}">Đúng ${d}/${it.o.length} ô.${it.gt ? `<div>${esc(it.gt)}</div>` : ""}${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}${aiKhung("aiG", "🤖 Giải thích")}</div>` + nextBtn();
+    ganAI("aiG", "giaiThichOnTap", { cau: tlCau, phuongAn: [], dapAn: tlDung });
+    bindNext();
+  };
+}
+function showOpen(it) {
+  app.innerHTML = `<div class="card">${head("tl", it)}<div class="q">${esc(it.q)}</div>
+    <textarea id="tv" placeholder="Viết câu trả lời của em ở đây…"></textarea><div class="prog" id="dem"></div>
+    <div class="row" style="margin-top:12px"><button class="btn ok" id="chk">Xem gợi ý và tự chấm</button></div><div id="fb"></div></div>`;
+  const tv = $("#tv"), cau = () => tv.value.split(/[.!?…]+/).map(s => s.trim()).filter(s => s.split(/\s+/).length >= 3).length;
+  tv.oninput = () => $("#dem").textContent = `Em đã viết khoảng ${cau()} câu.` + (it.cau ? ` Yêu cầu: ${it.cau[0]}–${it.cau[1]} câu.` : "");
+  tv.focus();
+  $("#chk").onclick = () => {
+    tv.disabled = true; $("#chk").remove();
+    const c = cau(), dCau = it.cau ? (c >= it.cau[0] && c <= it.cau[1]) : null;
+    $("#fb").outerHTML = `<div class="fb ok"><b>Gợi ý — em đánh dấu những ý mình đã viết được:</b>
+      ${it.y.map((y, i) => `<div><label style="font-weight:400"><input type="checkbox" data-i="${i}"> ${esc(y)}</label></div>`).join("")}
+      ${dCau != null ? `<div style="margin-top:6px">${dCau ? "✔" : "✗"} Độ dài: ${c} câu (yêu cầu ${it.cau[0]}–${it.cau[1]} câu)</div>` : ""}
+      ${it.mau ? `<details style="margin-top:8px"><summary>Xem đoạn văn mẫu</summary><p>${esc(it.mau)}</p></details>` : ""}
+      ${it.src ? `<div class="src">📖 ${esc(it.src)}</div>` : ""}</div>
+      <div class="row" style="margin-top:14px"><button class="btn" id="nx">Chấm xong ➜</button></div>`;
+    $("#nx").onclick = () => {
+      const k = app.querySelectorAll('input[type=checkbox]:checked').length, tot = it.y.length + (dCau != null ? 1 : 0);
+      const d = (k + (dCau ? 1 : 0)) / tot; cong("tl", d, 1);
+      if (d < 1) S.sai.push("Tự luận: " + it.q.slice(0, 40));
+      S.tl_bai = S.tl_bai || []; S.tl_bai.push(tv.value.slice(0, 500));
+      nextTurn(); S.qi++; show();
+    };
+  };
+}
+
+/* ---------- tổng kết + ghi vết ---------- */
+function finish() {
+  stopTimer();
+  let dat = 0, toi = 0; S.vongs.forEach(k => { dat += S.diem[k]; toi += S.toi[k]; });
+  const thang10 = toi ? Math.round(dat / toi * 100) / 10 : 0;
+  const rec = { rid: BAI.id + "-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 7), bai: BAI.id, ten: BAI.ten, ma: S.ma || (S.doi ? "THI-DOI" : ""), luc: new Date().toISOString(), giay: Math.round((Date.now() - S.bat) / 1000),
+    diem10: thang10, vong: Object.fromEntries(S.vongs.map(k => [k, `${Math.round(S.diem[k] * 100) / 100}/${S.toi[k]}`])),
+    doi: S.doi ? S.doi.map(t => t.ten + ": " + Math.round(t.d * 100) / 100) : null, sai: S.sai.slice(0, 40), het: S.het };
+  const log = lsGet(LOGKEY, []); log.push(rec); lsSet(LOGKEY, log.slice(-500));
+  teamBar();
+  const msg = thang10 >= 8 ? "Xuất sắc! 🏆" : thang10 >= 6.5 ? "Tốt lắm! 👍" : thang10 >= 5 ? "Đạt — ôn thêm chỗ sai nhé 💪" : "Cần ôn lại — chơi thêm lượt nữa nhé 📚";
+  const xh = S.doi ? S.doi.slice().sort((a, b) => b.d - a.d) : null;
+  app.innerHTML = `<div class="card"><h2 style="text-align:center;margin:0">Tổng kết</h2>
+    ${xh ? `<div class="big-emoji">🏆</div><h2 style="text-align:center">${esc(xh[0].ten)} dẫn đầu</h2><table><tr><th>Hạng</th><th>Đội</th><th>Điểm</th></tr>${xh.map((t, i) => `<tr><td>${i + 1}</td><td>${esc(t.ten)}</td><td>${Math.round(t.d * 100) / 100}</td></tr>`).join("")}</table>` :
+      `<div class="score">${thang10.toString().replace(".", ",")}</div><p style="text-align:center;font-size:20px">${msg}</p>`}
+    <table style="margin-top:12px"><tr><th>Vòng</th><th>Kết quả</th></tr>${S.vongs.map(k => `<tr><td>${VONG.find(v => v.k === k).ten}</td><td>${Math.round(S.diem[k] * 100) / 100} / ${S.toi[k]}</td></tr>`).join("")}</table>
+    ${S.sai.length ? `<details style="margin-top:12px"><summary>Các ý cần ôn lại (${S.sai.length})</summary><ul>${S.sai.map(s => `<li>${esc(s)}</li>`).join("")}</ul></details>` : ""}
+    <p class="prog" id="gui">${S.ma ? "Đang lưu kết quả…" : "Kết quả đã lưu trên máy này (📒 Lịch sử)."}</p>
+    <div class="row"><button class="btn acc" id="again">🔁 Chơi lượt mới</button><button class="btn ghost" id="hm">Về đầu</button></div></div>`;
+  $("#again").onclick = () => start(S.vongs, S.het, S.ma, S.doi ? S.doi.map(t => t.ten) : []);
+  $("#hm").onclick = home;
+  send(rec);
+}
+
+/* Gửi kết quả — giống các bài tập của Đấu trường:
+   lưu ngay trên máy (hàng chờ), có mạng thì tự gửi; mất mạng giữa chừng không mất bài.
+   Mỗi lượt có mã riêng (rid) để bảng điểm không ghi trùng khi gửi lại. */
+const GUI_URL = BAI.gui_url || "";
+/* Gói kết quả theo đúng mẫu ACTIVITY_RESULTS của Đấu trường: mode «review» = Ôn tập (chuyên cần tính riêng). */
+function goiDauTruong(r) {
+  const parts = Object.values(r.vong || {}).map(v => String(v).split("/").map(Number));
+  const dat = parts.reduce((a, x) => a + (x[0] || 0), 0), toi = parts.reduce((a, x) => a + (x[1] || 0), 0);
+  return { eventId: r.rid, mode: "review", subject: BAI.mon, grade: Number(BAI.khoi || 6), lessonId: BAI.id, lessonNo: 0,
+    lessonTitle: BAI.ten, studentId: r.ma, score: r.diem10, correct: Math.round(dat), total: toi,
+    durationSeconds: r.giay, startedAtMs: Date.parse(r.luc) - r.giay * 1000 };
+}
+function send(rec) {
+  if (!rec.ma || rec.ma === "THI-DOI") { flush(); return; }          // thi đội: chỉ lưu trên máy
+  const q = lsGet(QKEY, []); q.push(rec); lsSet(QKEY, q.slice(-300)); flush();
+}
+function trangThai(t) { const g = $("#gui"); if (g) g.textContent = t; }
+let dangGui = false;
+async function flush() {
+  const q = lsGet(QKEY, []);
+  const choGui = q.length;
+  if (!choGui) return;
+  const gs = window.google && google.script && google.script.run;   // mở ngay trong Web App Đấu trường
+  if (!GUI_URL && !gs) { trangThai("✔ Đã lưu kết quả."); return; }
+  if (!navigator.onLine) { trangThai("✔ Đã lưu kết quả."); return; }
+  if (dangGui) return; dangGui = true;
+  const con = [];
+  for (const r of q) {
+    try {
+      const goi = goiDauTruong(r);
+      if (gs) await new Promise((ok, loi) => google.script.run.withSuccessHandler(x => (x && x.ok === false) ? loi(new Error(x.message)) : ok(x)).withFailureHandler(loi).saveArenaOfflineResult(goi));
+      else await fetch(GUI_URL, { method: "POST", mode: "no-cors", headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "ontap_result", data: goi }) });
+      const log = lsGet(LOGKEY, []); const x = log.find(y => y.rid === r.rid); if (x) { x.da_gui = new Date().toISOString(); lsSet(LOGKEY, log); }
+    } catch (e) { con.push(r); }
+  }
+  const moi = lsGet(QKEY, []).filter(r => !q.some(y => y.rid === r.rid));   // lượt mới thêm trong lúc gửi
+  lsSet(QKEY, con.concat(moi)); dangGui = false;
+  trangThai("✔ Đã lưu kết quả.");
+}
+addEventListener("message", e => { if (e.data && e.data.type === "ONTAP_ACK" && e.data.rid) lsSet(QKEY, lsGet(QKEY, []).filter(r => r.rid !== e.data.rid)); });
+setInterval(flush, 30000); setTimeout(flush, 1500);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) flush(); });
+if ("serviceWorker" in navigator && location.protocol.startsWith("http") && !(window.google && google.script)) navigator.serviceWorker.register("sw.js").catch(() => {});
+
+/* ---------- lịch sử trên máy (cho giáo viên) ---------- */
+$("#btnLog").onclick = () => {
+  stopTimer();
+  const log = lsGet(LOGKEY, []).slice().reverse();
+  app.innerHTML = `<div class="card"><div class="row"><h2 style="margin:0">📒 Lịch sử lượt chơi trên máy này (${log.length})</h2><span class="grow"></span><button class="btn sm" id="csv">Tải CSV</button><button class="btn sm ghost" id="hm">Đóng</button></div>
+    <div style="overflow:auto;margin-top:10px"><table><tr><th>Lúc</th><th>Mã / Đội</th><th>Điểm /10</th><th>Từng vòng</th><th>Thời gian</th><th>Ý sai</th><th>Gửi</th></tr>
+    ${log.map(r => `<tr><td>${new Date(r.luc).toLocaleString("vi-VN")}</td><td>${esc(r.ma || "—")}${r.doi ? "<br>" + r.doi.map(esc).join("<br>") : ""}</td><td><b>${r.diem10}</b></td><td>${Object.entries(r.vong).map(([k, v]) => k.toUpperCase() + " " + v).join("<br>")}</td><td>${Math.floor(r.giay / 60)}′${r.giay % 60}″</td><td>${r.sai.length}</td><td>${r.da_gui ? "✔" : (r.ma && r.ma !== "THI-DOI" ? "⏳" : "—")}</td></tr>`).join("")}</table></div>
+    <div class="row" style="margin-top:10px"><button class="btn sm ghost" id="xoa">Xoá lịch sử trên máy</button></div></div>`;
+  $("#hm").onclick = home;
+  $("#xoa").onclick = () => { if (confirm("Xoá toàn bộ lịch sử lượt chơi trên máy này?")) { lsSet(LOGKEY, []); $("#btnLog").click(); } };
+  $("#csv").onclick = () => {
+    const rows = [["luc", "ma", "diem10", "vong", "giay", "so_y_sai", "y_sai"]].concat(log.map(r => [r.luc, r.ma, r.diem10, Object.entries(r.vong).map(([k, v]) => k + " " + v).join(" | "), r.giay, r.sai.length, r.sai.join(" | ")]));
+    const csv = "﻿" + rows.map(r => r.map(c => `"${String(c).replace(/"/g, '""')}"`).join(",")).join("\n");
+    const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob([csv], { type: "text/csv" })); a.download = BAI.id + "_lich-su.csv"; a.click();
+  };
+};
+
+home();
+</script>
+</body>
+</html>
