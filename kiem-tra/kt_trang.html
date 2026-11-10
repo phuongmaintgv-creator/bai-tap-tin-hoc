@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kiểm tra</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:"Segoe UI",Arial,sans-serif;background:#0b1a2c;color:#f7fbff;font-size:21px}
+.top{position:sticky;top:0;z-index:5;background:#10233b;border-bottom:1px solid #285274;padding:10px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.top h1{font-size:clamp(18px,2.6vw,26px);margin:0;flex:1}.ma{color:#9fc7df;font-size:18px}
+.clock{font-size:32px;font-weight:900;background:#081a2e;border:2px solid #48dfa3;border-radius:14px;padding:4px 16px;min-width:140px;text-align:center}
+.clock.warn{border-color:#ffc857;color:#ffc857}.clock.danger{border-color:#ff6b78;color:#ff6b78}.clock.an{visibility:hidden}
+main{max-width:1100px;margin:0 auto;padding:16px}
+.vao{max-width:860px;margin:30px auto;text-align:center;background:#10233b;border:1px solid #285274;border-radius:24px;padding:30px 24px}
+.vao h2{font-size:clamp(26px,3.6vw,40px);color:#ffc857;margin:0 0 10px}.vao .mon{font-size:clamp(20px,2.6vw,28px);font-weight:700;margin-bottom:18px}
+.thongbao{font-size:clamp(22px,3vw,32px);font-weight:800;line-height:1.45;background:#081a2e;border:3px solid #ffc857;border-radius:18px;padding:20px;margin:18px 0}
+.cautruc{font-size:clamp(18px,2.2vw,24px);text-align:left;display:inline-block;margin:6px 0 18px;line-height:1.7}
+.batdau{font-size:clamp(24px,3vw,32px);font-weight:900;padding:18px 44px;border-radius:18px;border:0;background:#48dfa3;color:#062014;cursor:pointer}
+h2.phan{font-size:clamp(24px,3vw,32px);color:#ffc857;margin:28px 0 6px}.huong{color:#c3d6e8;font-size:19px;margin:0 0 12px}
+.cau{background:#10233b;border:1px solid #244765;border-radius:16px;padding:16px;margin:14px 0}
+.q{font-size:clamp(21px,2.6vw,30px);font-weight:700;line-height:1.35;margin-bottom:12px}.q b{color:#ffc857}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.opt{display:flex;gap:12px;align-items:center;border:2px solid #244765;border-radius:14px;padding:14px 16px;cursor:pointer;background:#0b1a2c;color:#f7fbff;font-size:clamp(19px,2.3vw,27px);text-align:left;font-family:inherit}
+.opt .k{flex:none;width:44px;height:44px;border-radius:12px;background:#081a2e;color:#ffc857;display:grid;place-items:center;font-weight:900}
+.opt.sel{border-color:#51d6ff;background:rgba(81,214,255,.16)}
+table{width:100%;border-collapse:collapse;margin-top:6px}td,th{border:1px solid #285274;padding:12px;font-size:clamp(18px,2.2vw,25px);vertical-align:middle}th{background:#152d49}
+.ds button{min-width:96px;min-height:54px;font-size:21px;font-weight:800;border-radius:12px;border:2px solid #285274;background:#0b1a2c;color:#f7fbff;cursor:pointer;margin:2px}
+.ds button.on.t{background:#48dfa3;color:#062014;border-color:#48dfa3}.ds button.on.f{background:#ff6b78;color:#2a0508;border-color:#ff6b78}
+select{width:100%;font-size:clamp(18px,2.2vw,24px);padding:12px;border-radius:12px;background:#081a2e;color:#fff;border:2px solid #285274}
+.nop{display:block;margin:30px auto 70px;font-size:28px;font-weight:900;padding:18px 48px;border-radius:18px;border:0;background:#ffc857;color:#211706;cursor:pointer}
+.nen{position:fixed;inset:0;background:rgba(3,8,16,.82);display:grid;place-items:center;z-index:20}
+.hop{background:#10233b;border:2px solid #ffc857;border-radius:22px;padding:28px;max-width:560px;width:calc(100% - 32px);text-align:center}
+.hop p{font-size:clamp(22px,3vw,30px);font-weight:800;margin:0 0 10px}.hop .phu{font-size:19px;font-weight:400;color:#c3d6e8;margin-bottom:20px}
+.hop button{font-size:24px;font-weight:900;padding:14px 26px;border-radius:14px;border:0;margin:6px;cursor:pointer}
+.hop .co{background:#ffc857;color:#211706}.hop .khong{background:#285274;color:#fff}
+.kq{max-width:760px;margin:40px auto;text-align:center;background:#10233b;border-radius:22px;padding:30px}.kq .d{font-size:80px;font-weight:900;color:#ffc857}
+@media(max-width:640px){.opts{grid-template-columns:1fr}.clock{font-size:24px;min-width:100px}}
+</style></head><body>
+<div class="top"><h1 id="ten"></h1><span class="ma" id="ma"></span><span class="clock an" id="clock">20:00</span></div>
+<main id="app"></main>
+<script>
+(function(){
+var C=__CFG__, D=__DE__;
+var KEY='kt_nhap_'+C.k+'_'+C.sid, bai={mc:{},ds:{},ghep:{}}, daNop=false, het=0, T=null, eid='kt_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8);
+try{var cu=JSON.parse(localStorage.getItem(KEY)||'null');if(cu){bai=cu.bai||bai;eid=cu.eid||eid;}}catch(e){}
+var hL=null;function luu(){try{localStorage.setItem(KEY,JSON.stringify({bai:bai,eid:eid}))}catch(e){}
+  clearTimeout(hL);hL=setTimeout(function(){try{google.script.run.withFailureHandler(function(){}).luuNhapKiemTra({k:C.k,tk:C.tk,mc:bai.mc,ds:bai.ds,ghep:bai.ghep})}catch(e){}},1500);}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function tron(a,seed){a=a.slice();var x=seed;for(var i=a.length-1;i>0;i--){x=(x*9301+49297)%233280;var j=Math.floor(x/233280*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a}
+var seed=0;for(var i=0;i<C.sid.length;i++)seed=(seed*31+C.sid.charCodeAt(i))%233280;
+var app=document.getElementById('app'),ck=document.getElementById('clock');
+var DM=D.diem||{mc:0.5,ds:0.25,ghep:0.5};function so(x){return String(Math.round(x*100)/100).replace('.',',')}
+var dI=D.mc.length*DM.mc,dII=D.ds.length*4*DM.ds,dIII=D.ghep?D.ghep.A.length*DM.ghep:0;
+document.getElementById('ten').textContent=C.ten;document.getElementById('ma').textContent='Mã: '+C.sid;
+
+/* ---- màn hình trước khi làm bài ---- */
+function manVao(){
+  app.innerHTML='<div class="vao"><h2>📝 BÀI KIỂM TRA</h2><div class="mon">'+esc(C.ten)+'</div>'+
+    '<div class="thongbao">Bài kiểm tra chỉ được làm <u>một lần duy nhất</u> và có tính thời gian là <u>'+Math.round(C.tong/60)+' phút</u>.<br>Chúc các em làm bài tốt!</div>'+
+    '<div class="cautruc">• Phần I. Trắc nghiệm một đáp án đúng: '+D.mc.length+' câu ('+so(dI)+' điểm)<br>• Phần II. Đúng / Sai: '+D.ds.length+' câu, mỗi câu 4 ý ('+so(dII)+' điểm)'+(D.ghep?'<br>• Phần III. Mảnh ghép: '+D.ghep.A.length+' cặp ('+so(dIII)+' điểm)':'')+'<br>• Hết giờ, máy tự nộp bài.</div><br>'+
+    '<button class="batdau" id="bd">'+(C.daBatDau?'▶ LÀM TIẾP (còn '+Math.ceil(C.conLai/60)+' phút)':'▶ BẮT ĐẦU LÀM BÀI')+'</button><p id="loi" style="color:#ff8a8a"></p></div>';
+  document.getElementById('bd').onclick=function(){var b=this;b.disabled=true;b.textContent='⏳ Đang mở bài…';
+    google.script.run.withSuccessHandler(function(r){if(!r||!r.ok){document.getElementById('loi').textContent=(r&&r.message)||'Chưa mở được bài, em thử lại.';b.disabled=false;b.textContent='▶ BẮT ĐẦU LÀM BÀI';return;}
+        het=Date.now()+r.conLai*1000;veBai();ck.classList.remove('an');T=setInterval(dem,1000);dem();})
+      .withFailureHandler(function(){document.getElementById('loi').textContent='Mạng chập chờn, em bấm lại.';b.disabled=false;b.textContent='▶ BẮT ĐẦU LÀM BÀI';})
+      .batDauKiemTra({k:C.k,tk:C.tk});};
+}
+
+/* ---- bài làm ---- */
+function veBai(){
+  var h='<h2 class="phan">PHẦN I. TRẮC NGHIỆM MỘT ĐÁP ÁN ĐÚNG ('+so(dI)+' điểm)</h2><p class="huong">Mỗi câu chọn MỘT phương án đúng. Mỗi câu đúng được '+so(DM.mc)+' điểm.</p>';
+  tron(D.mc,seed+1).forEach(function(c,n){h+='<div class="cau"><div class="q"><b>Câu '+(n+1)+'.</b> '+esc(c.q)+'</div><div class="opts">';
+    tron(c.o,seed+7*n+3).forEach(function(o,m){h+='<button class="opt'+(bai.mc[c.i]===o.j?' sel':'')+'" data-c="'+c.i+'" data-j="'+o.j+'"><span class="k">'+'ABCD'[m]+'</span><span>'+esc(o.t)+'</span></button>';});
+    h+='</div></div>';});
+  h+='<h2 class="phan">PHẦN II. ĐÚNG / SAI ('+so(dII)+' điểm)</h2><p class="huong">Mỗi câu có 4 ý. Với từng ý, em bấm ĐÚNG hoặc SAI. Mỗi ý đúng được '+so(DM.ds)+' điểm.</p>';
+  D.ds.forEach(function(c,n){h+='<div class="cau ds"><div class="q"><b>Câu '+(n+1)+'.</b> '+esc(c.dan)+'</div><table>';
+    c.y.forEach(function(y,j){var v=bai.ds[c.i]?bai.ds[c.i][j]:null;h+='<tr><td>'+'abcd'[j]+') '+esc(y)+'</td><td style="width:220px;text-align:center;white-space:nowrap"><button class="t'+(v===true?' on':'')+'" data-c="'+c.i+'" data-y="'+j+'" data-v="1">ĐÚNG</button><button class="f'+(v===false?' on':'')+'" data-c="'+c.i+'" data-y="'+j+'" data-v="0">SAI</button></td></tr>';});
+    h+='</table></div>';});
+  if(D.ghep){var B=tron(D.ghep.B,seed+99);
+  h+='<h2 class="phan">PHẦN III. MẢNH GHÉP ('+so(dIII)+' điểm)</h2><p class="huong">'+esc(D.ghep.yeu)+' Với mỗi ý ở cột A, em chọn ý khớp ở cột B. Mỗi cặp đúng được '+so(DM.ghep)+' điểm.</p><div class="cau"><table><tr><th style="width:42%">Cột A</th><th>Chọn ý ở cột B</th></tr>';
+  D.ghep.A.forEach(function(a,n){h+='<tr><td><b>'+(n+1)+'.</b> '+esc(a.t)+'</td><td><select data-a="'+a.i+'"><option value="">— chọn —</option>';
+    B.forEach(function(b,m){h+='<option value="'+b.i+'"'+(bai.ghep[a.i]===b.i?' selected':'')+'>'+'abcd'[m]+'. '+esc(b.t)+'</option>';});h+='</select></td></tr>';});
+  h+='</table></div>';}
+  h+='<button class="nop" id="nop">📤 NỘP BÀI</button>';
+  app.innerHTML=h;window.scrollTo(0,0);
+  app.querySelectorAll('.opt').forEach(function(b){b.onclick=function(){if(daNop)return;var c=+b.dataset.c;bai.mc[c]=+b.dataset.j;app.querySelectorAll('.opt[data-c="'+c+'"]').forEach(function(x){x.classList.toggle('sel',x===b)});luu();};});
+  app.querySelectorAll('.ds button').forEach(function(b){b.onclick=function(){if(daNop)return;var c=+b.dataset.c,y=+b.dataset.y;bai.ds[c]=bai.ds[c]||[null,null,null,null];bai.ds[c][y]=b.dataset.v==='1';
+    app.querySelectorAll('.ds button[data-c="'+c+'"][data-y="'+y+'"]').forEach(function(x){x.classList.toggle('on',x===b)});luu();};});
+  app.querySelectorAll('select').forEach(function(s){s.onchange=function(){bai.ghep[+s.dataset.a]=s.value===''?null:+s.value;luu();};});
+  document.getElementById('nop').onclick=hoiNop;
+}
+function thieu(){var n=0;D.mc.forEach(function(c){if(bai.mc[c.i]==null)n++;});D.ds.forEach(function(c){for(var j=0;j<4;j++)if(!bai.ds[c.i]||bai.ds[c.i][j]==null)n++;});if(D.ghep)D.ghep.A.forEach(function(a){if(bai.ghep[a.i]==null)n++;});return n;}
+function hoiNop(){
+  if(daNop)return;var t=thieu(),nen=document.createElement('div');nen.className='nen';
+  nen.innerHTML='<div class="hop"><p>Bạn có chắc chắn nộp bài không?</p><div class="phu">'+(t?'⚠️ Em còn <b>'+t+'</b> câu/ý chưa làm.':'Em đã làm hết các câu.')+' Nộp rồi thì không làm lại được.</div><button class="co" id="coNop">📤 NỘP BÀI</button><button class="khong" id="lamTiep">↩ LÀM TIẾP</button></div>';
+  document.body.appendChild(nen);
+  document.getElementById('lamTiep').onclick=function(){nen.remove();};
+  document.getElementById('coNop').onclick=function(){nen.remove();nop(false);};
+}
+function nop(tuDong){
+  if(daNop)return;daNop=true;var nut=document.getElementById('nop');if(nut){nut.disabled=true;nut.textContent='⏳ Đang nộp bài…';}
+  var gui=function(){google.script.run.withSuccessHandler(function(r){
+      if(!r||r.ok===false){alert((r&&r.message)||'Chưa nộp được, em bấm NỘP BÀI lại.');daNop=false;if(nut){nut.disabled=false;nut.textContent='📤 NỘP BÀI';}return;}
+      try{localStorage.removeItem(KEY)}catch(e){}
+      clearInterval(T);ck.classList.add('an');
+      app.innerHTML='<div class="kq"><h2>'+(tuDong?'⏰ Hết giờ — máy đã tự nộp bài':'✅ Em đã nộp bài')+'</h2><div class="d">'+String(r.diem).replace('.',',')+'</div><p style="font-size:26px">điểm / 10</p>'+(r.p1!=null?'<p>Phần I: '+so(r.p1)+' / '+so(dI)+' · Phần II: '+so(r.p2)+' / '+so(dII)+(D.ghep?' · Phần III: '+so(r.p3)+' / '+so(dIII):'')+'</p>':'')+'</div>';
+      if(r.ct){var t='<div class="kq" style="max-width:1050px;text-align:left"><h2>Chi tiết từng câu (cô làm thử)</h2><table><tr><th>Câu</th><th>Nội dung</th><th>Đã chọn</th><th>Đáp án</th><th></th></tr>';r.ct.forEach(function(c){t+='<tr><td>'+c.n+'</td><td>'+esc(c.q)+'</td><td>'+esc(c.c||'(bỏ trống)')+'</td><td>'+esc(c.da)+'</td><td>'+(c.d?'✅':'❌')+'</td></tr>';});app.insertAdjacentHTML('beforeend',t+'</table></div>');}
+      if(window.__hienVeTC)window.__hienVeTC();
+    }).withFailureHandler(function(){if(nut)nut.textContent='⏳ Mạng chập chờn, đang gửi lại…';setTimeout(gui,5000);}).nopBaiKiemTra({k:C.k,tk:C.tk,mc:bai.mc,ds:bai.ds,ghep:bai.ghep,eventId:eid,tuDong:!!tuDong});};
+  gui();
+}
+function dem(){var s=Math.max(0,Math.round((het-Date.now())/1000));ck.textContent='⏱ '+String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');
+  ck.className='clock'+(s<=60?' danger':s<=300?' warn':'');if(s<=0&&!daNop){var m=document.querySelector('.nen');if(m)m.remove();nop(true);}}
+manVao();
+})();
+</script></body></html>
