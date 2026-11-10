@@ -1,6 +1,6 @@
 /**
  * 📝 KIỂM TRA TRÊN ĐẤU TRƯỜNG (10/11/2026) — GV Ngô Thị Phương Mai · Trường THCS Chánh Hưng
- * - Bài kiểm tra thường xuyên 2: Tin 6, Tin 7 (Bài 1 – Bài 6). 20 phút · 10 câu 1 đáp án (5 đ) · Đúng/Sai 3 câu × 4 ý (3 đ) · Mảnh ghép 4 cặp (2 đ).
+ * - Bài kiểm tra thường xuyên 2: Tin 6, Tin 7 (Bài 1 – Bài 6). 30 phút (cô chỉnh 10/11, từ 20 phút) · 10 câu 1 đáp án (5 đ) · Đúng/Sai 3 câu × 4 ý (3 đ) · Mảnh ghép 4 cặp (2 đ).
  * - MẶC ĐỊNH KHOÁ. Cô mở/khoá bằng menu 🏆 Đấu trường → 📝 Kiểm tra → «Cho phép làm bài» / «Khoá bài kiểm tra».
  * - Đáp án CHỈ ở máy chủ (không gửi xuống máy học sinh); máy chủ chấm.
  * - Mỗi em làm 1 lần. Giờ bắt đầu ghi ở máy chủ nên tải lại trang không được thêm giờ; hết giờ máy tự nộp / tự thu bài.
@@ -352,3 +352,9 @@ function lamThu_gk2_tin6() { ktLamThu_('gk2_tin6'); }  function lamThu_gk2_tin7(
 function lamThu_hk2_tin6() { ktLamThu_('hk2_tin6'); }  function lamThu_hk2_tin7() { ktLamThu_('hk2_tin7'); }
 function lamThu_tx1_tin6() { ktLamThu_('tx1_tin6'); }  function lamThu_tx1_tin7() { ktLamThu_('tx1_tin7'); }
 function lamThu_gk1_tin6() { ktLamThu_('gk1_tin6'); }  function lamThu_gk1_tin7() { ktLamThu_('gk1_tin7'); }
+
+/* 📝 Menu «Kiểm tra» riêng trên thanh menu của bảng tính (dễ thấy) — giống mục 📝 Kiểm tra trong menu 🏆 Đấu trường */
+function taoMenuKiemTraRieng_() {
+  const gia = {addSubMenu(m) { this.m = m; return this; }};
+  themMenuKiemTra_(gia); gia.m.addToUi();
+}
