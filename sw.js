@@ -1,7 +1,7 @@
 // Bài tập Đấu trường Tri thức — CHẠY KHÔNG CẦN MẠNG (15/11/2026)
 // Mở một trang lần đầu (có mạng) là máy tải sẵn toàn bộ bài tập Tin 6–9; sau đó tắt mạng vẫn làm được.
 // Có mạng thì máy tự cập nhật bản mới ở nền. Ôn tập, kiểm tra cần mạng (đếm lượt, ghi điểm) nên không lưu ở đây.
-const BAN = 'baitap-v1';
+const BAN = 'baitap-v2';
 const TEP = [
   './',
   './index.html',
