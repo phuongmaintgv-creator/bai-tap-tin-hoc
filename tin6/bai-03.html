@@ -119,5 +119,6 @@ $('restartBtn').onclick=()=>location.reload();
 console.info('Arena ready',{questions:qs.length,time:QUESTION_TIME,questionShuffle:true,answerShuffle:true});
 })();
 </script>
+<script>/* chạy không cần mạng (15/11/2026) */if('serviceWorker' in navigator){navigator.serviceWorker.register('/bai-tap-tin-hoc/sw.js',{scope:'/bai-tap-tin-hoc/'}).catch(function(){});}</script>
 </body>
 </html>
